@@ -35,12 +35,6 @@ dependencies {
     annotationProcessor "org.spongepowered:mixin:$rootProject.mixin_version:processor"
     compileOnly "org.spongepowered:mixin:$rootProject.mixin_version"
     compileOnly "org.jetbrains:annotations:24.1.0"
-
-    // Dev-only runtime mods
-    modLocalRuntime files(
-            rootProject.file("tools/devmods/mezz_config-1.20.1-fabric-0.6.3.jar"),
-            rootProject.file("tools/devmods/jei-1.20.1-fabric-15.62.0.217.jar"),
-            rootProject.file("tools/devmods/hold-my-items-fabric-4.2.5H1.jar"))
 }
 
 processResources {

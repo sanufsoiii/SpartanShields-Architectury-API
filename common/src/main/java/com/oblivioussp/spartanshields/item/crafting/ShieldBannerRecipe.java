@@ -2,6 +2,8 @@ package com.oblivioussp.spartanshields.item.crafting;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.oblivioussp.spartanshields.init.ModRecipes;
 import com.oblivioussp.spartanshields.item.ShieldBaseItem;
 import net.minecraft.core.NonNullList;
@@ -30,8 +32,8 @@ import net.minecraft.world.level.Level;
 public class ShieldBannerRecipe extends ShieldDecorationRecipe {
    protected final Item shieldItem;
 
-   public ShieldBannerRecipe(ResourceLocation loc, Item shield) {
-      super(loc, CraftingBookCategory.EQUIPMENT);
+   public ShieldBannerRecipe(Item shield) {
+      super(CraftingBookCategory.EQUIPMENT);
       this.shieldItem = shield;
    }
 
@@ -119,26 +121,22 @@ public class ShieldBannerRecipe extends ShieldDecorationRecipe {
    }
 
    public static class Serializer implements RecipeSerializer<ShieldBannerRecipe> {
+      public static final Codec<ShieldBannerRecipe> CODEC = RecordCodecBuilder.create(instance ->
+         instance.group(
+            BuiltInRegistries.ITEM.byNameCodec().fieldOf("shield").forGetter(ShieldBannerRecipe::getShieldItem)
+         ).apply(instance, ShieldBannerRecipe::new)
+      );
+
       @Override
-      public ShieldBannerRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-         String shieldName = GsonHelper.getAsString(json, "shield");
-         Item shieldItem = BuiltInRegistries.ITEM.get(new ResourceLocation(shieldName));
-         if (shieldItem == null) {
-            throw new JsonSyntaxException("Item " + shieldName + " did not exist!");
-         }
-
-         if (!(shieldItem instanceof ShieldBaseItem)) {
-            throw new JsonSyntaxException("Item " + shieldName + " is not a valid Shield!");
-         }
-
-         return new ShieldBannerRecipe(recipeId, shieldItem);
+      public Codec<ShieldBannerRecipe> codec() {
+         return CODEC;
       }
 
       @Override
-      public ShieldBannerRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+      public ShieldBannerRecipe fromNetwork(FriendlyByteBuf buffer) {
          ResourceLocation shieldName = buffer.readResourceLocation();
          Item shield = BuiltInRegistries.ITEM.get(shieldName);
-         return new ShieldBannerRecipe(recipeId, shield);
+         return new ShieldBannerRecipe(shield);
       }
 
       @Override

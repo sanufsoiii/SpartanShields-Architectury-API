@@ -4,6 +4,7 @@ import com.oblivioussp.spartanshields.util.Constants;
 import com.oblivioussp.spartanshields.util.Log;
 import com.oblivioussp.spartanshields.util.TierSS;
 import dev.architectury.platform.Platform;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -76,6 +77,11 @@ public final class BotaniaCompat {
          Log.warn("Botania: failed to request mana: " + e);
          return false;
       }
+   }
+
+   public static net.minecraft.core.Holder<Attribute> pixieSpawnChanceHolder() {
+      ResourceLocation loc = ResourceLocation.fromNamespaceAndPath(Constants.BOTANIA_MODID, "pixie_spawn_chance");
+      return net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.getHolder(loc).orElse(null);
    }
 
    public static Attribute pixieSpawnChanceAttribute() {

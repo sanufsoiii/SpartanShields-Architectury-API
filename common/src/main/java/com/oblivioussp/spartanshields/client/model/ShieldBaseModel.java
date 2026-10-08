@@ -14,11 +14,6 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
-/**
- * Geometry ported verbatim from the Forge release: the model only touches vanilla client
- * classes (Model / ModelPart / LayerDefinition), so the identical code renders on both
- * loaders.
- */
 public class ShieldBaseModel extends Model {
    protected static final String PART_PLATE = "plate";
    protected static final String PART_HANDLE = "handle";
@@ -50,9 +45,9 @@ public class ShieldBaseModel extends Model {
    }
 
    public void renderExtraParts(
-      PoseStack mStack, VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha
+      PoseStack mStack, VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn, int color
    ) {
-      this.handle.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+      this.handle.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color);
    }
 
    public void renderLayers(
@@ -61,16 +56,14 @@ public class ShieldBaseModel extends Model {
       RenderType renderTypeIn,
       int packedLightIn,
       int packedOverlayIn,
-      float red,
-      float green,
-      float blue,
-      float alpha
+      int color
    ) {
    }
 
+   @Override
    public void renderToBuffer(
-      PoseStack mStack, VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha
+      PoseStack mStack, VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn, int color
    ) {
-      this.root.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+      this.root.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color);
    }
 }

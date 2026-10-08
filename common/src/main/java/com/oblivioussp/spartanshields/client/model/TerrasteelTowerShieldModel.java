@@ -58,9 +58,9 @@ public class TerrasteelTowerShieldModel extends ShieldBaseModel {
 
    @Override
    public void renderExtraParts(
-      PoseStack mStack, VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha
+      PoseStack mStack, VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn, int color
    ) {
-      super.renderExtraParts(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-      this.plateExtra.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+      super.renderExtraParts(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color);
+      this.plateExtra.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color);
    }
 }

@@ -20,7 +20,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.Properties;
-import net.minecraft.world.item.Tier;
 
 public class ModItems {
    public static final DeferredRegister<Item> REGISTER =
@@ -179,20 +178,20 @@ public class ModItems {
    public static final RegistrySupplier<ShieldBaseItem> LUMIUM_TOWER_SHIELD =
          REGISTER.register("lumium_tower_shield", () -> new BlockEffectShieldItem(TierSS.LUMIUM, 1280, true, MobEffects.GLOWING, 200, 0, new Properties()));
    public static final RegistrySupplier<ShieldBaseItem> ENDERIUM_BASIC_SHIELD =
-         REGISTER.register("enderium_basic_shield", () -> new BlockEffectShieldItem(TierSS.ENDERIUM, 3120, MobEffects.MOVEMENT_SLOWDOWN, 100, 1, new Properties()));
+         REGISTER.register("enderium_basic_shield", () -> new BlockEffectShieldItem(TierSS.ENDERIUM, 3120, MobEffects.SLOWNESS, 100, 1, new Properties()));
    public static final RegistrySupplier<ShieldBaseItem> ENDERIUM_TOWER_SHIELD =
-         REGISTER.register("enderium_tower_shield", () -> new BlockEffectShieldItem(TierSS.ENDERIUM, 3120, true, MobEffects.MOVEMENT_SLOWDOWN, 100, 1, new Properties()));
+         REGISTER.register("enderium_tower_shield", () -> new BlockEffectShieldItem(TierSS.ENDERIUM, 3120, true, MobEffects.SLOWNESS, 100, 1, new Properties()));
 
    private static TierSS manasteelTier() {
-      return new TierSS(BotaniaCompat.tier("getManasteelItemTier", TierSS.MANASTEEL), TierSS.MANASTEEL.getRepairTag());
+      return BotaniaCompat.tier("getManasteelItemTier", TierSS.MANASTEEL);
    }
 
    private static TierSS terrasteelTier() {
-      return new TierSS(BotaniaCompat.tier("getTerrasteelItemTier", TierSS.TERRASTEEL), TierSS.TERRASTEEL.getRepairTag());
+      return BotaniaCompat.tier("getTerrasteelItemTier", TierSS.TERRASTEEL);
    }
 
    private static TierSS elementiumTier() {
-      return new TierSS(BotaniaCompat.tier("getElementiumItemTier", TierSS.ELEMENTIUM), TierSS.ELEMENTIUM.getRepairTag());
+      return BotaniaCompat.tier("getElementiumItemTier", TierSS.ELEMENTIUM);
    }
 
    public static void register() {

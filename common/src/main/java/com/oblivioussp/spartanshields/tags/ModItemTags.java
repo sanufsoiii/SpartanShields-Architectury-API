@@ -7,7 +7,7 @@ import net.minecraft.world.item.Item;
 
 public class ModItemTags {
    private static TagKey<Item> tag(String path) {
-      return TagKey.create(Registries.ITEM, new ResourceLocation("spartanshields", path));
+      return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("spartanshields", path));
    }
 
    // Repair / crafting material tags.
@@ -44,7 +44,7 @@ public class ModItemTags {
    public static final TagKey<Item> WOODEN_ROD = tag("rods/wooden");
 
    // Vanilla material tags.
-   public static final TagKey<Item> PLANKS = TagKey.create(Registries.ITEM, new ResourceLocation("minecraft", "planks"));
+   public static final TagKey<Item> PLANKS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("minecraft", "planks"));
    public static final TagKey<Item> INGOTS_COPPER = tag("ingots/copper");
    public static final TagKey<Item> INGOTS_IRON = tag("ingots/iron");
    public static final TagKey<Item> INGOTS_GOLD = tag("ingots/gold");

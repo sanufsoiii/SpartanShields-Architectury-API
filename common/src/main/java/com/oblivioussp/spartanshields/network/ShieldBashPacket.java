@@ -6,10 +6,12 @@ import com.oblivioussp.spartanshields.init.ModSounds;
 import com.oblivioussp.spartanshields.init.ModStats;
 import com.oblivioussp.spartanshields.item.PaybackDamage;
 import com.oblivioussp.spartanshields.tags.ModItemTags;
+import com.oblivioussp.spartanshields.SpartanShields;
 import dev.architectury.networking.NetworkManager;
-import dev.architectury.networking.simple.BaseC2SMessage;
-import dev.architectury.networking.simple.MessageType;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -31,7 +33,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
  * the check is now {@code item instanceof ShieldItem}, which is what vanilla's blocking code
  * itself tests.
  */
-public class ShieldBashPacket extends BaseC2SMessage {
+public class ShieldBashPacket implements CustomPacketPayload {
    /**
     * Porting note: the Forge release used {@code player.getEntityReach()}, a Forge
     * {@code IForgePlayer} extension. Vanilla 1.20.1 has no reach attribute (it arrived in 1.20.2),
@@ -39,8 +41,10 @@ public class ShieldBashPacket extends BaseC2SMessage {
     */
    public static final double TOWER_BASH_REACH = 4.5D;
 
-   public static final MessageType TYPE =
-         NetworkHandler.NETWORK_MANAGER.registerC2S("shield_bash", ShieldBashPacket::decode);
+   public static final CustomPacketPayload.Type<ShieldBashPacket> TYPE =
+         new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(SpartanShields.ID, "shield_bash"));
+   public static final StreamCodec<RegistryFriendlyByteBuf, ShieldBashPacket> STREAM_CODEC =
+         StreamCodec.ofMember(ShieldBashPacket::write, ShieldBashPacket::decode);
 
    protected final InteractionHand hand;
    protected final int entityId;
@@ -65,12 +69,15 @@ public class ShieldBashPacket extends BaseC2SMessage {
    }
 
    @Override
-   public MessageType getType() {
+   public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
       return TYPE;
    }
 
-   @Override
-   public void write(FriendlyByteBuf buf) {
+   public void sendToServer() {
+      NetworkManager.sendToServer(this);
+   }
+
+   public void write(RegistryFriendlyByteBuf buf) {
       buf.writeEnum(this.hand);
       buf.writeInt(this.entityId);
       buf.writeBoolean(this.attackEntity);
@@ -81,15 +88,14 @@ public class ShieldBashPacket extends BaseC2SMessage {
     * ({@code IForgeItemStack}) and 1.20.1's EnchantmentHelper has no ItemStack overload, so the
     * level comes from the stack's enchantment map.
     */
-   private static int enchantmentLevel(ItemStack stack, Enchantment enchantment) {
-      return EnchantmentHelper.getEnchantments(stack).getOrDefault(enchantment, 0);
+   private static int enchantmentLevel(ItemStack stack, net.minecraft.resources.ResourceKey<Enchantment> enchantment) {
+      return ModEnchantments.getEnchantmentLevel(stack, enchantment);
    }
 
-   public static ShieldBashPacket decode(FriendlyByteBuf buf) {
+   public static ShieldBashPacket decode(RegistryFriendlyByteBuf buf) {
       return new ShieldBashPacket(buf.readEnum(InteractionHand.class), buf.readInt(), buf.readBoolean());
    }
 
-   @Override
    public void handle(NetworkManager.PacketContext context) {
       context.queue(() -> {
          if (!(context.getPlayer() instanceof ServerPlayer player)) {
@@ -104,7 +110,7 @@ public class ShieldBashPacket extends BaseC2SMessage {
          ItemStack shieldStack = player.getItemInHand(this.hand);
          boolean isTowerShield = shieldStack.is(ModItemTags.TOWER_SHIELDS);
          if (shieldStack.isEmpty()
-               || player.getCooldowns().isOnCooldown(shieldStack.getItem())
+               || player.getCooldowns().isOnCooldown(shieldStack)
                || !player.getUseItem().is(ModItemTags.SHIELDS_WITH_BASH)) {
             return;
          }
@@ -136,7 +142,7 @@ public class ShieldBashPacket extends BaseC2SMessage {
          }
 
          player.stopUsingItem();
-         player.getCooldowns().addCooldown(shieldStack.getItem(),
+         player.getCooldowns().addCooldown(shieldStack,
                isTowerShield ? Config.INSTANCE.cooldownTowerShieldBash.get() : Config.INSTANCE.cooldownShieldBash.get());
       });
    }
@@ -148,16 +154,17 @@ public class ShieldBashPacket extends BaseC2SMessage {
             Mth.sin(player.getYRot() * ((float) Math.PI / 180.0F)),
             -Mth.cos(player.getYRot() * ((float) Math.PI / 180.0F)));
       float bashDamage = 1.0F;
-      if (enchantmentLevel(shieldStack, ModEnchantments.PAYBACK.get()) != 0) {
-         bashDamage += shieldStack.getOrCreateTag().getFloat(PaybackDamage.NBT_PAYBACK_DMG);
-         shieldStack.getTag().putFloat(PaybackDamage.NBT_PAYBACK_DMG, 0.0F);
+      if (enchantmentLevel(shieldStack, ModEnchantments.PAYBACK) != 0) {
+         net.minecraft.world.item.component.CustomData customData = shieldStack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY);
+         bashDamage += customData.copyTag().getFloatOr(PaybackDamage.NBT_PAYBACK_DMG, 0.0F);
+         net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, shieldStack, tag -> tag.putFloat(PaybackDamage.NBT_PAYBACK_DMG, 0.0F));
       }
 
       targetEntity.hurt(player.damageSources().playerAttack(player), bashDamage);
-      shieldStack.hurtAndBreak(5, player, entity -> entity.broadcastBreakEvent(hand));
-      int firebrandLvl = enchantmentLevel(shieldStack, ModEnchantments.FIREBRAND.get());
+      shieldStack.hurtAndBreak(5, player, hand == InteractionHand.MAIN_HAND ? net.minecraft.world.entity.EquipmentSlot.MAINHAND : net.minecraft.world.entity.EquipmentSlot.OFFHAND);
+      int firebrandLvl = enchantmentLevel(shieldStack, ModEnchantments.FIREBRAND);
       if (firebrandLvl != 0) {
-         targetEntity.setSecondsOnFire(firebrandLvl * 5);
+         targetEntity.igniteForSeconds(firebrandLvl * 5.0F);
       }
 
       return bashDamage > 1.0F;

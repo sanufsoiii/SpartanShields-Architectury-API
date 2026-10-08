@@ -49,10 +49,8 @@ public class SpartanShieldsForge {
    public SpartanShieldsForge() {
       Log.info("Constructing Mod: " + SpartanShields.NAME);
 
-      // Architectury's Forge registrar manager looks the mod event bus up in its own registry, which
-      // has to be fed once per mod. Without it DeferredRegister.register() fails with
-      // "Can't get event bus for mod ... because it was not registered!".
-      EventBuses.registerModEventBus(SpartanShields.ID, FMLJavaModLoadingContext.get().getModEventBus());
+      var modBus = FMLJavaModLoadingContext.get().getModEventBus();
+      EventBuses.registerModEventBus(SpartanShields.ID, modBus);
 
       ModItems.register();
       ModSounds.register();
@@ -60,11 +58,11 @@ public class SpartanShieldsForge {
       ModRecipes.register();
       ModCreativeTabs.register();
 
-      ForgeConditionAdapters.register();
+      ForgeConditionAdapters.register(modBus);
 
       CommonEventHandler.register();
 
-      FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onSetup);
+      modBus.addListener(this::onSetup);
    }
 
    private void onSetup(FMLCommonSetupEvent event) {

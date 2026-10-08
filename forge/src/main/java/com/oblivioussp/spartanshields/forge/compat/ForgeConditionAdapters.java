@@ -2,6 +2,8 @@ package com.oblivioussp.spartanshields.forge.compat;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.oblivioussp.spartanshields.SpartanShields;
 import com.oblivioussp.spartanshields.crafting.condition.AnyModLoadedCondition;
 import com.oblivioussp.spartanshields.crafting.condition.ModLoadedCondition;
 import com.oblivioussp.spartanshields.crafting.condition.NotCondition;
@@ -11,73 +13,60 @@ import com.oblivioussp.spartanshields.crafting.condition.TypeDisabledCondition;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
-import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraftforge.common.crafting.conditions.ICondition;
-import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
- * Teaches Forge's own {@code CraftingHelper} about this mod's condition types.
- * <p>
- * Porting note: the shipped data pack uses {@code spartanshields:*} conditions instead of Forge's
- * {@code forge:not} / {@code forge:tag_empty} / {@code forge:mod_loaded}, because Fabric cannot parse
- * Forge's conditions at all. Forge drops any recipe whose conditions it cannot resolve, so every
- * condition is additionally wrapped in a thin {@link ICondition} adapter here. The evaluation itself
- * is shared with {@code mixin.MixinRecipeManager}, which filters the same recipes with the same
- * rules, so both layers always agree and nothing is dropped twice.
+ * Teaches Forge's condition serializer registry about this mod's condition types.
  */
 public final class ForgeConditionAdapters {
+   private static final DeferredRegister<Codec<? extends ICondition>> CONDITION_SERIALIZERS =
+         DeferredRegister.create(ForgeRegistries.Keys.CONDITION_SERIALIZERS, SpartanShields.ID);
+
+   private static final Map<String, Codec<? extends ICondition>> CODECS = new HashMap<>();
+
    private ForgeConditionAdapters() {
    }
 
-   public static void register() {
-      register(TypeDisabledCondition.ID, TypeDisabledCondition::new, TypeDisabledCondition::write);
-      register(ModLoadedCondition.ID, ModLoadedCondition::new, ModLoadedCondition::write);
-      register(AnyModLoadedCondition.ID, AnyModLoadedCondition::new, AnyModLoadedCondition::write);
-      register(TagEmptyCondition.ID, TagEmptyCondition::new, TagEmptyCondition::write);
-      register(NotCondition.ID, NotCondition::new, NotCondition::write);
+   public static void register(IEventBus bus) {
+      registerType(TypeDisabledCondition.ID, TypeDisabledCondition::new, TypeDisabledCondition::write);
+      registerType(ModLoadedCondition.ID, ModLoadedCondition::new, ModLoadedCondition::write);
+      registerType(AnyModLoadedCondition.ID, AnyModLoadedCondition::new, AnyModLoadedCondition::write);
+      registerType(TagEmptyCondition.ID, TagEmptyCondition::new, TagEmptyCondition::write);
+      registerType(NotCondition.ID, NotCondition::new, NotCondition::write);
+
+      CONDITION_SERIALIZERS.register(bus);
    }
 
-   private static <T extends SpartanCondition> void register(String id, Supplier<T> factory,
-                                                             Function<T, JsonObject> writer) {
-      CraftingHelper.register(new IConditionSerializer<ForgeCondition<T>>() {
-         @Override
-         public ForgeCondition<T> read(JsonObject json) {
-            return new ForgeCondition<>(new ResourceLocation(id), cast(factory.get().read(json)));
-         }
-
-         @Override
-         public void write(JsonObject json, ForgeCondition<T> value) {
-            // The delegate writes its full json; Forge adds the "type" key itself, so it is
-            // stripped here to keep the result a flat, round-trippable condition object.
-            JsonObject delegateJson = writer.apply(value.delegate());
-            for (String key : delegateJson.keySet()) {
-               if (!"type".equals(key)) {
-                  JsonElement element = delegateJson.get(key);
-                  json.add(key, element);
-               }
-            }
-         }
-
-         @Override
-         public ResourceLocation getID() {
-            return new ResourceLocation(id);
-         }
-
-         @SuppressWarnings("unchecked")
-         private T cast(SpartanCondition condition) {
-            return (T) condition;
-         }
-      });
+   private static <T extends SpartanCondition> void registerType(String fullId, Supplier<T> factory,
+                                                                 Function<T, JsonObject> writer) {
+      ResourceLocation loc = new ResourceLocation(fullId);
+      String path = loc.getPath();
+      Codec<ForgeCondition<T>> codec = ExtraCodecs.JSON.xmap(
+            json -> new ForgeCondition<>(cast(factory.get().read(json.getAsJsonObject())), path),
+            cond -> writer.apply(cond.delegate())
+      );
+      CODECS.put(path, codec);
+      CONDITION_SERIALIZERS.register(path, () -> codec);
    }
 
-   private record ForgeCondition<T extends SpartanCondition>(ResourceLocation id, T delegate) implements ICondition {
+   @SuppressWarnings("unchecked")
+   private static <T extends SpartanCondition> T cast(SpartanCondition condition) {
+      return (T) condition;
+   }
+
+   private record ForgeCondition<T extends SpartanCondition>(T delegate, String typePath) implements ICondition {
       @Override
-      public ResourceLocation getID() {
-         return this.id;
+      public Codec<? extends ICondition> codec() {
+         return CODECS.get(this.typePath);
       }
 
       @Override

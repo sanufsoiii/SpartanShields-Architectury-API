@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smithing_transform",
   "addition": {
-    "tag": "minecraft:ingots/netherite"
+    "item": "minecraft:netherite_ingot"
   },
   "base": {
     "item": "spartanshields:diamond_tower_shield"

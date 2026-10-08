@@ -3,6 +3,7 @@ package com.oblivioussp.spartanshields.crafting.condition;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.oblivioussp.spartanshields.SpartanShields;
 import com.oblivioussp.spartanshields.util.Log;
 
 import java.util.LinkedHashMap;
@@ -41,9 +42,15 @@ public final class SpartanConditions {
             continue;
          }
 
-         SpartanCondition condition = SpartanCondition.fromJson(element.getAsJsonObject());
+         JsonObject obj = element.getAsJsonObject();
+         String type = obj.has("type") ? obj.get("type").getAsString() : "";
+         if (!type.startsWith(SpartanShields.ID + ":")) {
+            // Foreign condition; leave to platform loader
+            continue;
+         }
+
+         SpartanCondition condition = SpartanCondition.fromJson(obj);
          if (condition == null) {
-            String type = element.getAsJsonObject().has("type") ? element.getAsJsonObject().get("type").getAsString() : "?";
             Log.warn("Unknown recipe condition type: " + type);
             continue;
          }

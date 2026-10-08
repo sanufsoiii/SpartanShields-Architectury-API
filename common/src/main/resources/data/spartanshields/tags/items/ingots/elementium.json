@@ -1,6 +1,21 @@
 {
   "replace": false,
   "values": [
-    "botania:elementium_ingot"
+    {
+      "id": "#forge:ingots/elementium",
+      "required": false
+    },
+    {
+      "id": "#c:elementium_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/elementium",
+      "required": false
+    },
+    {
+      "id": "botania:elementium_ingot",
+      "required": false
+    }
   ]
 }

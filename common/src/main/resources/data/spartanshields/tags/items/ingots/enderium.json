@@ -1,6 +1,25 @@
 {
   "replace": false,
   "values": [
-    "enderio:enderium_ingot"
+    {
+      "id": "#forge:ingots/enderium",
+      "required": false
+    },
+    {
+      "id": "#c:enderium_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/enderium",
+      "required": false
+    },
+    {
+      "id": "thermal:enderium_ingot",
+      "required": false
+    },
+    {
+      "id": "enderio:enderium_ingot",
+      "required": false
+    }
   ]
 }

@@ -4,7 +4,7 @@
   "group": "spartanshields:iron_shields",
   "key": {
     "#": {
-      "tag": "minecraft:ingots/iron"
+      "tag": "spartanshields:ingots/iron"
     },
     "O": {
       "item": "spartanshields:wooden_tower_shield"

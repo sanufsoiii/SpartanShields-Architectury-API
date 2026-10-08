@@ -1,9 +1,45 @@
 {
   "replace": false,
   "values": [
-    "thermal:lead_ingot",
-    "mekanism:lead_ingot",
-    "enderio:lead_ingot",
-    "immersiveengineering:lead_ingot"
+    {
+      "id": "#forge:ingots/lead",
+      "required": false
+    },
+    {
+      "id": "#c:lead_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/lead",
+      "required": false
+    },
+    {
+      "id": "thermal:lead_ingot",
+      "required": false
+    },
+    {
+      "id": "mekanism:lead_ingot",
+      "required": false
+    },
+    {
+      "id": "enderio:lead_ingot",
+      "required": false
+    },
+    {
+      "id": "immersiveengineering:lead_ingot",
+      "required": false
+    },
+    {
+      "id": "techreborn:lead_ingot",
+      "required": false
+    },
+    {
+      "id": "modern_industrialization:lead_ingot",
+      "required": false
+    },
+    {
+      "id": "indrev:lead_ingot",
+      "required": false
+    }
   ]
 }

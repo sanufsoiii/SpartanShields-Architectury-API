@@ -1,8 +1,37 @@
 {
   "replace": false,
   "values": [
-    "thermal:invar_ingot",
-    "mekanism:invar_ingot",
-    "enderio:invar_ingot"
+    {
+      "id": "#forge:ingots/invar",
+      "required": false
+    },
+    {
+      "id": "#c:invar_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/invar",
+      "required": false
+    },
+    {
+      "id": "thermal:invar_ingot",
+      "required": false
+    },
+    {
+      "id": "mekanism:invar_ingot",
+      "required": false
+    },
+    {
+      "id": "enderio:invar_ingot",
+      "required": false
+    },
+    {
+      "id": "techreborn:invar_ingot",
+      "required": false
+    },
+    {
+      "id": "modern_industrialization:invar_ingot",
+      "required": false
+    }
   ]
 }

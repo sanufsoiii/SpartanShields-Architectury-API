@@ -13,9 +13,11 @@
       "modids": [
         "botania",
         "enderio",
-        "immtech",
+        "indrev",
         "mekanism",
-        "simpledm",
+        "modern_industrialization",
+        "mythicmetals",
+        "techreborn",
         "thermal"
       ]
     }

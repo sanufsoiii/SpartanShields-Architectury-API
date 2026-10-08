@@ -1,9 +1,49 @@
 {
   "replace": false,
   "values": [
-    "thermal:tin_ingot",
-    "mekanism:tin_ingot",
-    "enderio:tin_ingot",
-    "botania:tin_ingot"
+    {
+      "id": "#forge:ingots/tin",
+      "required": false
+    },
+    {
+      "id": "#c:tin_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/tin",
+      "required": false
+    },
+    {
+      "id": "thermal:tin_ingot",
+      "required": false
+    },
+    {
+      "id": "mekanism:tin_ingot",
+      "required": false
+    },
+    {
+      "id": "enderio:tin_ingot",
+      "required": false
+    },
+    {
+      "id": "botania:tin_ingot",
+      "required": false
+    },
+    {
+      "id": "techreborn:tin_ingot",
+      "required": false
+    },
+    {
+      "id": "modern_industrialization:tin_ingot",
+      "required": false
+    },
+    {
+      "id": "indrev:tin_ingot",
+      "required": false
+    },
+    {
+      "id": "mythicmetals:tin_ingot",
+      "required": false
+    }
   ]
 }

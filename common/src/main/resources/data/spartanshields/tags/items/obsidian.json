@@ -1,6 +1,22 @@
 {
   "replace": false,
   "values": [
-    "minecraft:obsidian"
+    {
+      "id": "#forge:obsidian",
+      "required": false
+    },
+    {
+      "id": "#c:obsidian",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/obsidian",
+      "required": false
+    },
+    "minecraft:obsidian",
+    {
+      "id": "#c:obsidians",
+      "required": false
+    }
   ]
 }

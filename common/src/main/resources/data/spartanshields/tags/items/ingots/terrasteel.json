@@ -1,6 +1,21 @@
 {
   "replace": false,
   "values": [
-    "botania:terrasteel_ingot"
+    {
+      "id": "#forge:ingots/terrasteel",
+      "required": false
+    },
+    {
+      "id": "#c:terrasteel_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/terrasteel",
+      "required": false
+    },
+    {
+      "id": "botania:terrasteel_ingot",
+      "required": false
+    }
   ]
 }

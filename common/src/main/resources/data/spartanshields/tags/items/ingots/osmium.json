@@ -1,8 +1,33 @@
 {
   "replace": false,
   "values": [
-    "thermal:osmium_ingot",
-    "mekanism:osmium_ingot",
-    "enderio:osmium_ingot"
+    {
+      "id": "#forge:ingots/osmium",
+      "required": false
+    },
+    {
+      "id": "#c:osmium_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/osmium",
+      "required": false
+    },
+    {
+      "id": "thermal:osmium_ingot",
+      "required": false
+    },
+    {
+      "id": "mekanism:osmium_ingot",
+      "required": false
+    },
+    {
+      "id": "enderio:osmium_ingot",
+      "required": false
+    },
+    {
+      "id": "mythicmetals:osmium_ingot",
+      "required": false
+    }
   ]
 }

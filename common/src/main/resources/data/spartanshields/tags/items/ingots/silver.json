@@ -1,9 +1,45 @@
 {
   "replace": false,
   "values": [
-    "thermal:silver_ingot",
-    "mekanism:silver_ingot",
-    "enderio:silver_ingot",
-    "immersiveengineering:silver_ingot"
+    {
+      "id": "#forge:ingots/silver",
+      "required": false
+    },
+    {
+      "id": "#c:silver_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/silver",
+      "required": false
+    },
+    {
+      "id": "thermal:silver_ingot",
+      "required": false
+    },
+    {
+      "id": "mekanism:silver_ingot",
+      "required": false
+    },
+    {
+      "id": "enderio:silver_ingot",
+      "required": false
+    },
+    {
+      "id": "immersiveengineering:silver_ingot",
+      "required": false
+    },
+    {
+      "id": "techreborn:silver_ingot",
+      "required": false
+    },
+    {
+      "id": "indrev:silver_ingot",
+      "required": false
+    },
+    {
+      "id": "mythicmetals:silver_ingot",
+      "required": false
+    }
   ]
 }

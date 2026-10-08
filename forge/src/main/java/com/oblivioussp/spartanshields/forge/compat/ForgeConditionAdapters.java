@@ -8,7 +8,10 @@ import com.oblivioussp.spartanshields.crafting.condition.NotCondition;
 import com.oblivioussp.spartanshields.crafting.condition.SpartanCondition;
 import com.oblivioussp.spartanshields.crafting.condition.TagEmptyCondition;
 import com.oblivioussp.spartanshields.crafting.condition.TypeDisabledCondition;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
@@ -79,6 +82,19 @@ public final class ForgeConditionAdapters {
 
       @Override
       public boolean test(IContext context) {
+         if (this.delegate instanceof TagEmptyCondition tagEmpty) {
+            ResourceLocation tagLoc = tagEmpty.getTagLocation();
+            if (tagLoc != null) {
+               return context.getTag(TagKey.create(Registries.ITEM, tagLoc)).isEmpty();
+            }
+         } else if (this.delegate instanceof NotCondition notCond) {
+            if (notCond.getInner() instanceof TagEmptyCondition tagEmpty) {
+               ResourceLocation tagLoc = tagEmpty.getTagLocation();
+               if (tagLoc != null) {
+                  return !context.getTag(TagKey.create(Registries.ITEM, tagLoc)).isEmpty();
+               }
+            }
+         }
          return this.delegate.test();
       }
    }

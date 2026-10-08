@@ -4,7 +4,7 @@
   "group": "spartanshields:diamond_shields",
   "key": {
     "#": {
-      "tag": "minecraft:gems/diamond"
+      "tag": "spartanshields:gems/diamond"
     },
     "O": {
       "item": "spartanshields:wooden_tower_shield"

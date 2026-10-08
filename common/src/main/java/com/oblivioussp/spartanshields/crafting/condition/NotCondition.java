@@ -16,6 +16,10 @@ public class NotCondition implements SpartanCondition {
       this.inner = inner;
    }
 
+   public SpartanCondition getInner() {
+      return this.inner;
+   }
+
    @Override
    public JsonObject write() {
       JsonObject json = new JsonObject();

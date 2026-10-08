@@ -1,9 +1,41 @@
 {
   "replace": false,
   "values": [
-    "thermal:nickel_ingot",
-    "mekanism:nickel_ingot",
-    "enderio:nickel_ingot",
-    "immersiveengineering:nickel_ingot"
+    {
+      "id": "#forge:ingots/nickel",
+      "required": false
+    },
+    {
+      "id": "#c:nickel_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/nickel",
+      "required": false
+    },
+    {
+      "id": "thermal:nickel_ingot",
+      "required": false
+    },
+    {
+      "id": "mekanism:nickel_ingot",
+      "required": false
+    },
+    {
+      "id": "enderio:nickel_ingot",
+      "required": false
+    },
+    {
+      "id": "immersiveengineering:nickel_ingot",
+      "required": false
+    },
+    {
+      "id": "techreborn:nickel_ingot",
+      "required": false
+    },
+    {
+      "id": "modern_industrialization:nickel_ingot",
+      "required": false
+    }
   ]
 }

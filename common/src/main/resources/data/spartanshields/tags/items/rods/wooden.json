@@ -1,9 +1,34 @@
 {
   "replace": false,
   "values": [
+    {
+      "id": "#forge:rods/wooden",
+      "required": false
+    },
+    {
+      "id": "#c:wood_sticks",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/wood_sticks",
+      "required": false
+    },
     "minecraft:stick",
-    "thermal:wooden_rod",
-    "mekanism:wooden_rod",
-    "enderio:wooden_rod"
+    {
+      "id": "thermal:wooden_rod",
+      "required": false
+    },
+    {
+      "id": "mekanism:wooden_rod",
+      "required": false
+    },
+    {
+      "id": "enderio:wooden_rod",
+      "required": false
+    },
+    {
+      "id": "#c:wooden_rods",
+      "required": false
+    }
   ]
 }

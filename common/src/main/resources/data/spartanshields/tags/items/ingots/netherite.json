@@ -1,0 +1,18 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:ingots/netherite",
+      "required": false
+    },
+    {
+      "id": "#c:netherite_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/netherite",
+      "required": false
+    },
+    "minecraft:netherite_ingot"
+  ]
+}

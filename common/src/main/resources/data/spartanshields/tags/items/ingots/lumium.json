@@ -1,6 +1,25 @@
 {
   "replace": false,
   "values": [
-    "enderio:lumium_ingot"
+    {
+      "id": "#forge:ingots/lumium",
+      "required": false
+    },
+    {
+      "id": "#c:lumium_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/lumium",
+      "required": false
+    },
+    {
+      "id": "thermal:lumium_ingot",
+      "required": false
+    },
+    {
+      "id": "enderio:lumium_ingot",
+      "required": false
+    }
   ]
 }

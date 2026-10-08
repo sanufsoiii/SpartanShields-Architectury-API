@@ -12,6 +12,9 @@
       "type": "spartanshields:any_mod_loaded",
       "modids": [
         "enderio",
+        "immersiveengineering",
+        "modern_industrialization",
+        "techreborn",
         "thermal"
       ]
     }

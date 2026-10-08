@@ -1,8 +1,45 @@
 {
   "replace": false,
   "values": [
-    "thermal:bronze_ingot",
-    "mekanism:bronze_ingot",
-    "enderio:bronze_ingot"
+    {
+      "id": "#forge:ingots/bronze",
+      "required": false
+    },
+    {
+      "id": "#c:bronze_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/bronze",
+      "required": false
+    },
+    {
+      "id": "thermal:bronze_ingot",
+      "required": false
+    },
+    {
+      "id": "mekanism:bronze_ingot",
+      "required": false
+    },
+    {
+      "id": "enderio:bronze_ingot",
+      "required": false
+    },
+    {
+      "id": "techreborn:bronze_ingot",
+      "required": false
+    },
+    {
+      "id": "modern_industrialization:bronze_ingot",
+      "required": false
+    },
+    {
+      "id": "indrev:bronze_ingot",
+      "required": false
+    },
+    {
+      "id": "mythicmetals:bronze_ingot",
+      "required": false
+    }
   ]
 }

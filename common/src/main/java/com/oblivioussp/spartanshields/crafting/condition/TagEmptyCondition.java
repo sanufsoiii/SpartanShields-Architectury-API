@@ -29,6 +29,10 @@ public class TagEmptyCondition implements SpartanCondition {
       this.tagLocation = tagLocation;
    }
 
+   public ResourceLocation getTagLocation() {
+      return this.tagLocation;
+   }
+
    @Override
    public JsonObject write() {
       JsonObject json = new JsonObject();

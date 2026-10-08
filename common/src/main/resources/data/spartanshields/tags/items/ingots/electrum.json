@@ -1,9 +1,45 @@
 {
   "replace": false,
   "values": [
-    "thermal:electrum_ingot",
-    "mekanism:electrum_ingot",
-    "enderio:electrum_ingot",
-    "immersiveengineering:electrum_ingot"
+    {
+      "id": "#forge:ingots/electrum",
+      "required": false
+    },
+    {
+      "id": "#c:electrum_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/electrum",
+      "required": false
+    },
+    {
+      "id": "thermal:electrum_ingot",
+      "required": false
+    },
+    {
+      "id": "mekanism:electrum_ingot",
+      "required": false
+    },
+    {
+      "id": "enderio:electrum_ingot",
+      "required": false
+    },
+    {
+      "id": "immersiveengineering:electrum_ingot",
+      "required": false
+    },
+    {
+      "id": "techreborn:electrum_ingot",
+      "required": false
+    },
+    {
+      "id": "modern_industrialization:electrum_ingot",
+      "required": false
+    },
+    {
+      "id": "indrev:electrum_ingot",
+      "required": false
+    }
   ]
 }

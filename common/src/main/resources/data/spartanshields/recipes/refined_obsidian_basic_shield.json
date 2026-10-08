@@ -15,6 +15,7 @@
       "type": "spartanshields:any_mod_loaded",
       "modids": [
         "enderio",
+        "mekanism",
         "thermal"
       ]
     }

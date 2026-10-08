@@ -1,7 +1,29 @@
 {
   "replace": false,
   "values": [
-    "thermal:refined_glowstone_ingot",
-    "enderio:refined_glowstone_ingot"
+    {
+      "id": "#forge:ingots/refined_glowstone",
+      "required": false
+    },
+    {
+      "id": "#c:refined_glowstone_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/refined_glowstone",
+      "required": false
+    },
+    {
+      "id": "thermal:refined_glowstone_ingot",
+      "required": false
+    },
+    {
+      "id": "enderio:refined_glowstone_ingot",
+      "required": false
+    },
+    {
+      "id": "mekanism:refined_glowstone_ingot",
+      "required": false
+    }
   ]
 }

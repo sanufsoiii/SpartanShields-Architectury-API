@@ -1,8 +1,33 @@
 {
   "replace": false,
   "values": [
-    "thermal:constantan_ingot",
-    "mekanism:constantan_ingot",
-    "enderio:constantan_ingot"
+    {
+      "id": "#forge:ingots/constantan",
+      "required": false
+    },
+    {
+      "id": "#c:constantan_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/constantan",
+      "required": false
+    },
+    {
+      "id": "thermal:constantan_ingot",
+      "required": false
+    },
+    {
+      "id": "mekanism:constantan_ingot",
+      "required": false
+    },
+    {
+      "id": "enderio:constantan_ingot",
+      "required": false
+    },
+    {
+      "id": "immersiveengineering:constantan_ingot",
+      "required": false
+    }
   ]
 }

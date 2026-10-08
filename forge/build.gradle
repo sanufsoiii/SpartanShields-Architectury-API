@@ -55,10 +55,7 @@ dependencies {
     // jars in tools/devmods have no such marker. Refresh them with tools/fetch_devmods.py.
     modLocalRuntime files(
             rootProject.file("tools/devmods/mezz_config-1.20.1-forge-0.6.7.jar"),
-            rootProject.file("tools/devmods/jei-1.20.1-forge-15.62.0.217.jar"),
-            rootProject.file("tools/devmods/holdmyitems-1.20.1-4v2.0.jar"),
-            rootProject.file("tools/devmods/embeddium-0.3.11+mc1.20.1.jar"),
-            rootProject.file("tools/devmods/oculus-mc1.20.1-1.7.0.jar"))
+            rootProject.file("tools/devmods/jei-1.20.1-forge-15.62.0.217.jar"))
 }
 
 processResources {

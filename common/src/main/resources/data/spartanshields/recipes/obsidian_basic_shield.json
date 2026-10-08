@@ -6,10 +6,6 @@
       "disabled": [
         "obsidian"
       ]
-    },
-    {
-      "type": "spartanshields:tag_empty",
-      "tag": "spartanshields:obsidian"
     }
   ],
   "group": "spartanshields:obsidian_shields",

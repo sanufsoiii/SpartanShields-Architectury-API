@@ -1,7 +1,29 @@
 {
   "replace": false,
   "values": [
-    "thermal:refined_obsidian_ingot",
-    "enderio:refined_obsidian_ingot"
+    {
+      "id": "#forge:ingots/refined_obsidian",
+      "required": false
+    },
+    {
+      "id": "#c:refined_obsidian_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/refined_obsidian",
+      "required": false
+    },
+    {
+      "id": "thermal:refined_obsidian_ingot",
+      "required": false
+    },
+    {
+      "id": "enderio:refined_obsidian_ingot",
+      "required": false
+    },
+    {
+      "id": "mekanism:refined_obsidian_ingot",
+      "required": false
+    }
   ]
 }

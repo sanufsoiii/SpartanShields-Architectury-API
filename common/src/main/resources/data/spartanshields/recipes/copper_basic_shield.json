@@ -4,7 +4,7 @@
   "group": "spartanshields:copper_shields",
   "key": {
     "#": {
-      "tag": "minecraft:ingots/copper"
+      "tag": "spartanshields:ingots/copper"
     },
     "O": {
       "item": "spartanshields:wooden_basic_shield"

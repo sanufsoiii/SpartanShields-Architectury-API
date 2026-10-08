@@ -1,6 +1,22 @@
 {
   "replace": false,
   "values": [
-    "minecraft:cobblestone"
+    {
+      "id": "#forge:cobblestone",
+      "required": false
+    },
+    {
+      "id": "#c:cobblestone",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/cobblestone",
+      "required": false
+    },
+    "minecraft:cobblestone",
+    {
+      "id": "#c:cobblestones",
+      "required": false
+    }
   ]
 }

@@ -31,5 +31,19 @@
       "spartanshields:dark_steel_riot_tower_shield"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": true,
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "enderio"
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "type": "spartanshields:mod_loaded",
+      "modid": "enderio"
+    }
+  ]
 }

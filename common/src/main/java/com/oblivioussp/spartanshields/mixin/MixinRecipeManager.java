@@ -1,6 +1,7 @@
 package com.oblivioussp.spartanshields.mixin;
 
 import com.google.gson.JsonElement;
+import com.oblivioussp.spartanshields.SpartanShields;
 import com.oblivioussp.spartanshields.crafting.condition.SpartanConditions;
 import com.oblivioussp.spartanshields.util.Log;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
@@ -41,6 +42,9 @@ public abstract class MixinRecipeManager {
 
       while (iterator.hasNext()) {
          Map.Entry<ResourceLocation, JsonElement> entry = iterator.next();
+         if (!SpartanShields.ID.equals(entry.getKey().getNamespace())) {
+            continue;
+         }
          if (!entry.getValue().isJsonObject()) {
             continue;
          }
@@ -51,9 +55,13 @@ public abstract class MixinRecipeManager {
          }
       }
 
-      if (removed > 0) {
-         Log.debug("Disabled " + removed + " recipe(s) by config/missing materials");
+      int spartanTotal = 0;
+      for (ResourceLocation id : recipes.keySet()) {
+         if (SpartanShields.ID.equals(id.getNamespace())) {
+            spartanTotal++;
+         }
       }
+      Log.info("Loaded " + (spartanTotal - removed) + " Spartan Shields recipe(s) (" + removed + " disabled by conditions out of " + spartanTotal + " total)");
 
       recipes.clear();
       recipes.putAll(filtered);

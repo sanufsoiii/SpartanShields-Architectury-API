@@ -62,16 +62,9 @@ public class SpartanShieldsForge {
 
       ForgeConditionAdapters.register();
 
-      // The tower shields' item models are `builtin/entity` models whose size comes from their
-      // `display` block; the shared mixin has to reproduce the preamble ItemRenderer applies before
-      // delegating to a custom renderer, and on Forge that preamble is ForgeHooksClient's.
-      ClientRenderTransforms.setApplier((model, displayContext, pose, swing) ->
-            net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(pose, model, displayContext, swing));
-
       CommonEventHandler.register();
 
       FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onSetup);
-      FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onClientSetup);
    }
 
    private void onSetup(FMLCommonSetupEvent event) {
@@ -81,16 +74,6 @@ public class SpartanShieldsForge {
          ModStats.register();
          Config.INSTANCE.applyDurabilities();
       });
-   }
-
-   private void onClientSetup(FMLClientSetupEvent event) {
-      Log.info("Setting up client for " + SpartanShields.NAME);
-      if (Platform.getEnvironment() != Env.CLIENT) {
-         return;
-      }
-
-      ClientHelper.registerShared();
-      ClientEventHandler.register();
    }
 
    /**
@@ -126,6 +109,15 @@ public class SpartanShieldsForge {
       @SubscribeEvent
       public static void registerKeyMappings(net.minecraftforge.client.event.RegisterKeyMappingsEvent event) {
          event.register(ModKeyBinds.KEY_ALT_SHIELD_BASH);
+      }
+
+      @SubscribeEvent
+      public static void onClientSetup(FMLClientSetupEvent event) {
+         Log.info("Setting up client for " + SpartanShields.NAME);
+         ClientHelper.registerShared();
+         ClientEventHandler.register();
+         ClientRenderTransforms.setApplier((model, displayContext, pose, swing) ->
+               net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(pose, model, displayContext, swing));
       }
 
 

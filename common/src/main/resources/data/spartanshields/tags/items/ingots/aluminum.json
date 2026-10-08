@@ -1,7 +1,37 @@
 {
   "replace": false,
   "values": [
-    "thermal:aluminum_ingot",
-    "enderio:aluminum_ingot"
+    {
+      "id": "#forge:ingots/aluminum",
+      "required": false
+    },
+    {
+      "id": "#c:aluminum_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/aluminum",
+      "required": false
+    },
+    {
+      "id": "thermal:aluminum_ingot",
+      "required": false
+    },
+    {
+      "id": "enderio:aluminum_ingot",
+      "required": false
+    },
+    {
+      "id": "immersiveengineering:aluminum_ingot",
+      "required": false
+    },
+    {
+      "id": "techreborn:aluminum_ingot",
+      "required": false
+    },
+    {
+      "id": "modern_industrialization:aluminum_ingot",
+      "required": false
+    }
   ]
 }

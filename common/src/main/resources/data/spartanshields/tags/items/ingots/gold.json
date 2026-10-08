@@ -1,8 +1,26 @@
 {
   "replace": false,
   "values": [
+    {
+      "id": "#forge:ingots/gold",
+      "required": false
+    },
+    {
+      "id": "#c:gold_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/gold",
+      "required": false
+    },
     "minecraft:gold_ingot",
-    "thermal:gold_ingot",
-    "mekanism:gold_ingot"
+    {
+      "id": "thermal:gold_ingot",
+      "required": false
+    },
+    {
+      "id": "mekanism:gold_ingot",
+      "required": false
+    }
   ]
 }

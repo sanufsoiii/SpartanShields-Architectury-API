@@ -13,8 +13,11 @@
       "modids": [
         "enderio",
         "immersiveengineering",
+        "indrev",
         "mekanism",
-        "simpledm",
+        "modern_industrialization",
+        "mythicmetals",
+        "techreborn",
         "thermal"
       ]
     }

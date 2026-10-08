@@ -4,7 +4,7 @@
   "group": "spartanshields:gold_shields",
   "key": {
     "#": {
-      "tag": "minecraft:ingots/gold"
+      "tag": "spartanshields:ingots/gold"
     },
     "O": {
       "item": "spartanshields:wooden_tower_shield"

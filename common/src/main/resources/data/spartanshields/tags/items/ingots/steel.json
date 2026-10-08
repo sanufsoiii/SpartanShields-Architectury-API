@@ -1,9 +1,49 @@
 {
   "replace": false,
   "values": [
-    "thermal:steel_ingot",
-    "mekanism:steel_ingot",
-    "enderio:steel_ingot",
-    "immersiveengineering:steel_ingot"
+    {
+      "id": "#forge:ingots/steel",
+      "required": false
+    },
+    {
+      "id": "#c:steel_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/steel",
+      "required": false
+    },
+    {
+      "id": "thermal:steel_ingot",
+      "required": false
+    },
+    {
+      "id": "mekanism:steel_ingot",
+      "required": false
+    },
+    {
+      "id": "enderio:steel_ingot",
+      "required": false
+    },
+    {
+      "id": "immersiveengineering:steel_ingot",
+      "required": false
+    },
+    {
+      "id": "techreborn:steel_ingot",
+      "required": false
+    },
+    {
+      "id": "modern_industrialization:steel_ingot",
+      "required": false
+    },
+    {
+      "id": "indrev:steel_ingot",
+      "required": false
+    },
+    {
+      "id": "mythicmetals:steel_ingot",
+      "required": false
+    }
   ]
 }

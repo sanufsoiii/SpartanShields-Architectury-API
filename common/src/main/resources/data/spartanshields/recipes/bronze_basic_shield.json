@@ -12,7 +12,11 @@
       "type": "spartanshields:any_mod_loaded",
       "modids": [
         "enderio",
+        "indrev",
         "mekanism",
+        "modern_industrialization",
+        "mythicmetals",
+        "techreborn",
         "thermal"
       ]
     }

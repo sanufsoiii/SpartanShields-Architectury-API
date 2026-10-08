@@ -1,8 +1,37 @@
 {
   "replace": false,
   "values": [
-    "thermal:platinum_ingot",
-    "enderio:platinum_ingot",
-    "immersiveengineering:platinum_ingot"
+    {
+      "id": "#forge:ingots/platinum",
+      "required": false
+    },
+    {
+      "id": "#c:platinum_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/platinum",
+      "required": false
+    },
+    {
+      "id": "thermal:platinum_ingot",
+      "required": false
+    },
+    {
+      "id": "enderio:platinum_ingot",
+      "required": false
+    },
+    {
+      "id": "immersiveengineering:platinum_ingot",
+      "required": false
+    },
+    {
+      "id": "modern_industrialization:platinum_ingot",
+      "required": false
+    },
+    {
+      "id": "mythicmetals:platinum_ingot",
+      "required": false
+    }
   ]
 }

@@ -1,6 +1,25 @@
 {
   "replace": false,
   "values": [
-    "enderio:signalum_ingot"
+    {
+      "id": "#forge:ingots/signalum",
+      "required": false
+    },
+    {
+      "id": "#c:signalum_ingots",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/signalum",
+      "required": false
+    },
+    {
+      "id": "thermal:signalum_ingot",
+      "required": false
+    },
+    {
+      "id": "enderio:signalum_ingot",
+      "required": false
+    }
   ]
 }

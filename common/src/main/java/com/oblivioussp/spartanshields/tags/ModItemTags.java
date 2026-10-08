@@ -43,14 +43,14 @@ public class ModItemTags {
    public static final TagKey<Item> OBSIDIAN = tag("obsidian");
    public static final TagKey<Item> WOODEN_ROD = tag("rods/wooden");
 
-   // Vanilla material tags (kept as-is, they are loader-agnostic).
+   // Vanilla material tags.
    public static final TagKey<Item> PLANKS = TagKey.create(Registries.ITEM, new ResourceLocation("minecraft", "planks"));
-   public static final TagKey<Item> INGOTS_COPPER = TagKey.create(Registries.ITEM, new ResourceLocation("minecraft", "ingots/copper"));
-   public static final TagKey<Item> INGOTS_IRON = TagKey.create(Registries.ITEM, new ResourceLocation("minecraft", "ingots/iron"));
-   public static final TagKey<Item> INGOTS_GOLD = TagKey.create(Registries.ITEM, new ResourceLocation("minecraft", "ingots/gold"));
-   public static final TagKey<Item> INGOTS_NETHERITE = TagKey.create(Registries.ITEM, new ResourceLocation("minecraft", "ingots/netherite"));
-   public static final TagKey<Item> GEMS_DIAMOND = TagKey.create(Registries.ITEM, new ResourceLocation("minecraft", "gems/diamond"));
-   public static final TagKey<Item> GEMS_LAPIS = TagKey.create(Registries.ITEM, new ResourceLocation("minecraft", "gems/lapis"));
+   public static final TagKey<Item> INGOTS_COPPER = tag("ingots/copper");
+   public static final TagKey<Item> INGOTS_IRON = tag("ingots/iron");
+   public static final TagKey<Item> INGOTS_GOLD = tag("ingots/gold");
+   public static final TagKey<Item> INGOTS_NETHERITE = tag("ingots/netherite");
+   public static final TagKey<Item> GEMS_DIAMOND = tag("gems/diamond");
+   public static final TagKey<Item> GEMS_LAPIS = tag("gems/lapis");
 
    // Mod-owned behaviour tags.
    public static final TagKey<Item> BASIC_SHIELDS = tag("basic_shields");

@@ -12,8 +12,6 @@ import java.util.List;
 
 public class BasicShieldItem extends ShieldBaseItem {
    protected final TierSS material;
-   protected boolean doCraftCheck = true;
-   protected boolean canBeCrafted = true;
 
    public BasicShieldItem(TierSS toolMaterial, int defaultMaxDamage, boolean isTowerShieldIn, Properties prop) {
       super(defaultMaxDamage, isTowerShieldIn, prop);
@@ -28,22 +26,12 @@ public class BasicShieldItem extends ShieldBaseItem {
    public void appendHoverText(ItemStack stack, Level levelIn, List<Component> tooltip, TooltipFlag flagIn) {
       tooltip.add(Component.translatable("tooltip.spartanshields.protection", this.getMaxDamage(stack)));
 
-      if (this.doCraftCheck && levelIn != null) {
-         if (!Config.INSTANCE.forceDisableUncraftableTooltips.get()) {
-            // Porting note: Forge used ForgeRegistries.ITEMS.tags() + ITagManager to ask whether a
-            // repair tag is known and non-empty. Vanilla has no equivalent query, so emptiness of
-            // the repair ingredient is used as the "material unavailable" signal on both loaders.
-            if (this.material.getRepairIngredient().getItems().length == 0) {
-               this.canBeCrafted = false;
-            }
+      if (levelIn != null && !Config.INSTANCE.forceDisableUncraftableTooltips.get()) {
+         var tagOpt = net.minecraft.core.registries.BuiltInRegistries.ITEM.getTag(this.material.getRepairTag());
+         if (tagOpt.isEmpty() || tagOpt.get().size() == 0) {
+            tooltip.add(Component.translatable("tooltip.spartanshields.uncraftable_missing_material", this.material.getRepairTagName())
+                  .withStyle(ChatFormatting.RED));
          }
-
-         this.doCraftCheck = false;
-      }
-
-      if (!this.canBeCrafted) {
-         tooltip.add(Component.translatable("tooltip.spartanshields.uncraftable_missing_material", this.material.getRepairTagName())
-               .withStyle(ChatFormatting.RED));
       }
 
       super.appendHoverText(stack, levelIn, tooltip, flagIn);

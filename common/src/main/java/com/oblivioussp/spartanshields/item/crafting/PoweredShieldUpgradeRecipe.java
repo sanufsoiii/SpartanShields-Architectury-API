@@ -1,6 +1,7 @@
 package com.oblivioussp.spartanshields.item.crafting;
 
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
 import com.oblivioussp.spartanshields.init.ModRecipes;
 import com.oblivioussp.spartanshields.item.FEPoweredShieldItem;
 import com.oblivioussp.spartanshields.item.IItemPoweredFE;
@@ -72,11 +73,6 @@ public class PoweredShieldUpgradeRecipe implements CraftingRecipe {
    }
 
    @Override
-   public ResourceLocation getId() {
-      return this.internalRecipe.getId();
-   }
-
-   @Override
    public RecipeSerializer<?> getSerializer() {
       return ModRecipes.POWERED_SHIELD_UPGRADE.get();
    }
@@ -118,17 +114,19 @@ public class PoweredShieldUpgradeRecipe implements CraftingRecipe {
    }
 
    public static class Serializer implements RecipeSerializer<PoweredShieldUpgradeRecipe> {
+      public static final Codec<PoweredShieldUpgradeRecipe> CODEC = RecipeSerializer.SHAPED_RECIPE.codec()
+            .xmap(PoweredShieldUpgradeRecipe::new, recipe -> recipe.internalRecipe);
+
       @Override
-      public PoweredShieldUpgradeRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-         return new PoweredShieldUpgradeRecipe(
-               (ShapedRecipe) RecipeSerializer.SHAPED_RECIPE.fromJson(recipeId, json));
+      public Codec<PoweredShieldUpgradeRecipe> codec() {
+         return CODEC;
       }
 
       @Override
-      public PoweredShieldUpgradeRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+      public PoweredShieldUpgradeRecipe fromNetwork(FriendlyByteBuf buffer) {
          try {
             return new PoweredShieldUpgradeRecipe(
-                  (ShapedRecipe) RecipeSerializer.SHAPED_RECIPE.fromNetwork(recipeId, buffer));
+                  RecipeSerializer.SHAPED_RECIPE.fromNetwork(buffer));
          } catch (Exception e) {
             Log.error("Failed to read a Powered Shield Upgrade Recipe from a packet!");
             throw e;

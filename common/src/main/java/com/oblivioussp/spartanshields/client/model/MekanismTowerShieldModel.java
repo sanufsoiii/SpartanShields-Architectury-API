@@ -100,10 +100,10 @@ public class MekanismTowerShieldModel extends ShieldBaseModel {
 
    @Override
    public void renderExtraParts(
-      PoseStack mStack, VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha
+      PoseStack mStack, VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn, int color
    ) {
-      super.renderExtraParts(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-      this.extraParts.forEach(model -> model.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha));
+      super.renderExtraParts(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color);
+      this.extraParts.forEach(model -> model.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color));
    }
 
    @Override
@@ -113,12 +113,9 @@ public class MekanismTowerShieldModel extends ShieldBaseModel {
       RenderType renderTypeIn,
       int packedLightIn,
       int packedOverlayIn,
-      float red,
-      float green,
-      float blue,
-      float alpha
+      int color
    ) {
       VertexConsumer consumer = bufferIn.getBuffer(renderTypeIn);
-      this.root.render(mStack, consumer, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+      this.root.render(mStack, consumer, packedLightIn, packedOverlayIn, color);
    }
 }

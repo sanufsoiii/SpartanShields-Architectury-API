@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 @JeiPlugin
 public class SpartanShieldsPlugin implements IModPlugin {
-   private static final ResourceLocation PLUGIN_UID = new ResourceLocation(SpartanShields.ID, "jei_plugin");
+   private static final ResourceLocation PLUGIN_UID = ResourceLocation.fromNamespaceAndPath(SpartanShields.ID, "jei_plugin");
 
    @Override
    public ResourceLocation getPluginUid() {

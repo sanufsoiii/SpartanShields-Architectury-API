@@ -87,7 +87,8 @@ public class ModCreativeTabs {
          stacks.add(new ItemStack(supplier.get()));
          FEPoweredShieldItem item = supplier.get();
          ItemStack charged = new ItemStack(item);
-         charged.getOrCreateTag().putInt(FEPoweredShieldItem.NBT_ENERGY, item.getFECapacity(charged));
+         int cap = item.getFECapacity(charged);
+         net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, charged, tag -> tag.putInt(FEPoweredShieldItem.NBT_ENERGY, cap));
          stacks.add(charged);
       }
 

@@ -37,8 +37,8 @@ import java.util.Map;
  * (which is what the {@code FMLEnvironment.dist.isClient()} guards in the Forge release did).
  */
 public class ClientHelper {
-   private static final ResourceLocation BLOCKING_PROPERTY = new ResourceLocation("blocking");
-   private static final ResourceLocation DISABLED_PROPERTY = new ResourceLocation("disabled");
+   private static final ResourceLocation BLOCKING_PROPERTY = ResourceLocation.withDefaultNamespace("blocking");
+   private static final ResourceLocation DISABLED_PROPERTY = ResourceLocation.withDefaultNamespace("disabled");
 
    /** Loader-agnostic registrations. Safe to call from any client setup phase. */
    public static void registerShared() {
@@ -50,9 +50,9 @@ public class ClientHelper {
                   (stack, world, living, value) -> living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F);
          }
 
-         if (entry.get() instanceof FEPoweredShieldItem) {
+         if (entry.get() instanceof FEPoweredShieldItem powered) {
             ItemPropertiesRegistry.register(entry.get(), DISABLED_PROPERTY,
-                  (stack, world, living, value) -> stack.getOrCreateTag().getInt(FEPoweredShieldItem.NBT_ENERGY) <= 0 ? 1.0F : 0.0F);
+                  (stack, world, living, value) -> powered.getFEStored(stack) <= 0 ? 1.0F : 0.0F);
          }
       }
 

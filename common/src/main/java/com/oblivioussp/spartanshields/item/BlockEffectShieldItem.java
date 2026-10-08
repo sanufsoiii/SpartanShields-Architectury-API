@@ -2,6 +2,7 @@ package com.oblivioussp.spartanshields.item;
 
 import com.oblivioussp.spartanshields.util.TierSS;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.effect.MobEffect;
@@ -9,18 +10,18 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 
 import java.util.List;
 
 public class BlockEffectShieldItem extends BasicShieldItem implements IDamageShield {
-   private final MobEffect effect;
+   private final Holder<MobEffect> effect;
    private final int effectTicks;
    private final int effectLevel;
 
-   public BlockEffectShieldItem(TierSS toolMaterial, int defaultMaxDamage, boolean isTowerShieldIn, MobEffect effectIn,
+   public BlockEffectShieldItem(TierSS toolMaterial, int defaultMaxDamage, boolean isTowerShieldIn, Holder<MobEffect> effectIn,
                                 int effectTicksIn, int effectLevelIn, Properties prop) {
       super(toolMaterial, defaultMaxDamage, isTowerShieldIn, prop);
       this.effect = effectIn;
@@ -28,7 +29,7 @@ public class BlockEffectShieldItem extends BasicShieldItem implements IDamageShi
       this.effectLevel = effectLevelIn;
    }
 
-   public BlockEffectShieldItem(TierSS toolMaterial, int defaultMaxDamage, MobEffect effectIn, int effectTicksIn,
+   public BlockEffectShieldItem(TierSS toolMaterial, int defaultMaxDamage, Holder<MobEffect> effectIn, int effectTicksIn,
                                 int effectLevelIn, Properties prop) {
       this(toolMaterial, defaultMaxDamage, false, effectIn, effectTicksIn, effectLevelIn, prop);
    }
@@ -41,9 +42,9 @@ public class BlockEffectShieldItem extends BasicShieldItem implements IDamageShi
    }
 
    @Override
-   public void appendHoverText(ItemStack stack, Level levelIn, List<Component> tooltip, TooltipFlag flagIn) {
-      super.appendHoverText(stack, levelIn, tooltip, flagIn);
-      MutableComponent effectName = Component.translatable(this.effect.getDescriptionId());
+   public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
+      super.appendHoverText(stack, context, tooltip, flagIn);
+      MutableComponent effectName = Component.translatable(this.effect.value().getDescriptionId());
       if (this.effectLevel > 0) {
          effectName = Component.translatable("potion.withAmplifier", effectName, Component.translatable("potion.potency." + this.effectLevel));
       }

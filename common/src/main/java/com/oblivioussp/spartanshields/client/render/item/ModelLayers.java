@@ -34,7 +34,7 @@ public class ModelLayers {
    public static final ModelLayerLocation DARK_STEEL_SHIELD = createMainModelLayer("dark_steel_shield");
 
    public static ModelLayerLocation createMainModelLayer(String location) {
-      return new ModelLayerLocation(new ResourceLocation(SpartanShields.ID, location), "main");
+      return new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(SpartanShields.ID, location), "main");
    }
 
    public static void register() {

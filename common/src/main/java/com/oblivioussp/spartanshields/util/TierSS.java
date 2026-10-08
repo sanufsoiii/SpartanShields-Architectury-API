@@ -3,18 +3,17 @@ package com.oblivioussp.spartanshields.util;
 import com.oblivioussp.spartanshields.tags.ModItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.Tiers;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ToolMaterial;
 
-public class TierSS implements Tier {
-   public static final TierSS WOOD = new TierSS(Tiers.WOOD, ModItemTags.PLANKS);
-   public static final TierSS STONE = new TierSS(Tiers.STONE, ModItemTags.COBBLESTONE);
+public class TierSS {
+   public static final TierSS WOOD = new TierSS(ToolMaterial.WOOD, ModItemTags.PLANKS);
+   public static final TierSS STONE = new TierSS(ToolMaterial.STONE, ModItemTags.COBBLESTONE);
    public static final TierSS COPPER = new TierSS(200, 5.0F, 1.5F, 8, ModItemTags.INGOTS_COPPER);
-   public static final TierSS IRON = new TierSS(Tiers.IRON, ModItemTags.INGOTS_IRON);
-   public static final TierSS GOLD = new TierSS(Tiers.GOLD, ModItemTags.INGOTS_GOLD);
-   public static final TierSS DIAMOND = new TierSS(Tiers.DIAMOND, ModItemTags.GEMS_DIAMOND);
-   public static final TierSS NETHERITE = new TierSS(Tiers.NETHERITE, ModItemTags.INGOTS_NETHERITE);
+   public static final TierSS IRON = new TierSS(ToolMaterial.IRON, ModItemTags.INGOTS_IRON);
+   public static final TierSS GOLD = new TierSS(ToolMaterial.GOLD, ModItemTags.INGOTS_GOLD);
+   public static final TierSS DIAMOND = new TierSS(ToolMaterial.DIAMOND, ModItemTags.GEMS_DIAMOND);
+   public static final TierSS NETHERITE = new TierSS(ToolMaterial.NETHERITE, ModItemTags.INGOTS_NETHERITE);
    public static final TierSS OBSIDIAN = new TierSS(1024, 5.0F, 1.5F, 5, ModItemTags.OBSIDIAN);
    public static final TierSS TIN = new TierSS(180, 5.25F, 1.75F, 6, ModItemTags.TIN_INGOT);
    public static final TierSS BRONZE = new TierSS(320, 5.75F, 2.0F, 12, ModItemTags.BRONZE_INGOT);
@@ -53,43 +52,28 @@ public class TierSS implements Tier {
       this.repairTag = repairMaterialTag;
    }
 
-   public TierSS(Tier tier, TagKey<Item> repairMaterialTag) {
-      this(tier.getUses(), tier.getSpeed(), tier.getAttackDamageBonus(), tier.getEnchantmentValue(), repairMaterialTag);
+   public TierSS(ToolMaterial tier, TagKey<Item> repairMaterialTag) {
+      this(tier.durability(), tier.speed(), tier.attackDamageBonus(), tier.enchantmentValue(), repairMaterialTag);
    }
 
-   @Override
    public int getUses() {
       return this.durability;
    }
 
-   @Override
    public float getSpeed() {
       return this.speed;
    }
 
-   @Override
    public float getAttackDamageBonus() {
       return this.attackDamage;
    }
 
-   @Override
    public int getEnchantmentValue() {
       return this.enchantability;
    }
 
-   /**
-    * Still abstract in 1.20.1 (removed in 1.20.2); meaningless for shields, which is why the Forge
-    * release stubbed it out too.
-    */
-   @Override
-   @Deprecated
-   public int getLevel() {
-      return 0;
-   }
-
-   @Override
-   public Ingredient getRepairIngredient() {
-      return Ingredient.of(this.repairTag);
+   public boolean isValidRepairItem(ItemStack repair) {
+      return repair.is(this.repairTag);
    }
 
    public TagKey<Item> getRepairTag() {

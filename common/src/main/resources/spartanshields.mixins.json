@@ -8,7 +8,9 @@
     "MixinRecipeManager"
   ],
   "client": [
-    "MixinItemRenderer"
+    "ItemStackRenderStateAccessor",
+    "LayerRenderStateAccessor",
+    "MixinItemModelResolver"
   ],
   "injectors": {
     "defaultRequire": 1

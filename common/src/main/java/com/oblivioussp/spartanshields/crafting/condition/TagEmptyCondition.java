@@ -54,7 +54,6 @@ public class TagEmptyCondition implements SpartanCondition {
       }
 
       TagKey<Item> key = TagKey.create(Registries.ITEM, this.tagLocation);
-      Ingredient ingredient = Ingredient.of(key);
-      return ingredient.getItems().length == 0;
+      return net.minecraft.core.registries.BuiltInRegistries.ITEM.get(key).map(set -> set.size() == 0).orElse(true);
    }
 }

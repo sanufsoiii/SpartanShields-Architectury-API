@@ -1,6 +1,14 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "spartanshields:item/invar_tower_shield"
+    "type": "minecraft:condition",
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "spartanshields:item/tower_shield_base"
+    },
+    "on_true": {
+      "type": "minecraft:model",
+      "model": "spartanshields:item/tower_shield_base_blocking"
+    },
+    "property": "minecraft:using_item"
   }
 }

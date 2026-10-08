@@ -4,9 +4,9 @@ import com.oblivioussp.spartanshields.config.Config;
 import com.oblivioussp.spartanshields.util.TierSS;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class BasicShieldItem extends ShieldBaseItem {
    protected final TierSS material;
 
    public BasicShieldItem(TierSS toolMaterial, int defaultMaxDamage, boolean isTowerShieldIn, Properties prop) {
-      super(defaultMaxDamage, isTowerShieldIn, prop);
+      super(defaultMaxDamage, isTowerShieldIn, prop.repairable(toolMaterial.getRepairTag()).enchantable(toolMaterial.getEnchantmentValue()));
       this.material = toolMaterial;
    }
 
@@ -23,27 +23,17 @@ public class BasicShieldItem extends ShieldBaseItem {
    }
 
    @Override
-   public void appendHoverText(ItemStack stack, Level levelIn, List<Component> tooltip, TooltipFlag flagIn) {
-      tooltip.add(Component.translatable("tooltip.spartanshields.protection", this.getMaxDamage(stack)));
+   public void appendHoverText(ItemStack stack, Item.TooltipContext context, net.minecraft.world.item.component.TooltipDisplay display, java.util.function.Consumer<Component> tooltip, TooltipFlag flagIn) {
+      tooltip.accept(Component.translatable("tooltip.spartanshields.protection", this.getMaxDamage(stack)));
 
-      if (levelIn != null && !Config.INSTANCE.forceDisableUncraftableTooltips.get()) {
-         var tagOpt = net.minecraft.core.registries.BuiltInRegistries.ITEM.getTag(this.material.getRepairTag());
+      if (!Config.INSTANCE.forceDisableUncraftableTooltips.get()) {
+         var tagOpt = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(this.material.getRepairTag());
          if (tagOpt.isEmpty() || tagOpt.get().size() == 0) {
-            tooltip.add(Component.translatable("tooltip.spartanshields.uncraftable_missing_material", this.material.getRepairTagName())
+            tooltip.accept(Component.translatable("tooltip.spartanshields.uncraftable_missing_material", this.material.getRepairTagName())
                   .withStyle(ChatFormatting.RED));
          }
       }
 
-      super.appendHoverText(stack, levelIn, tooltip, flagIn);
-   }
-
-   @Override
-   public int getEnchantmentValue() {
-      return this.material.getEnchantmentValue();
-   }
-
-   @Override
-   public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-      return this.material.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
+      super.appendHoverText(stack, context, display, tooltip, flagIn);
    }
 }

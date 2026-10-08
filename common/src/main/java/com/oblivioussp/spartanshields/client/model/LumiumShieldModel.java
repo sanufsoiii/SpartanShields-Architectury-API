@@ -62,12 +62,12 @@ public class LumiumShieldModel extends ShieldBaseModel {
 
    @Override
    public void renderExtraParts(
-      PoseStack mStack, VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha
+      PoseStack mStack, VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn, int color
    ) {
-      super.renderExtraParts(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-      this.plateLeft.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-      this.plateLeft2.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-      this.plateRight.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-      this.plateRight2.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+      super.renderExtraParts(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color);
+      this.plateLeft.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color);
+      this.plateLeft2.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color);
+      this.plateRight.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color);
+      this.plateRight2.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color);
    }
 }

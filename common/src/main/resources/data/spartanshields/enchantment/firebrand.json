@@ -1,0 +1,23 @@
+{
+  "anvil_cost": 4,
+  "description": {
+    "translate": "enchantment.spartanshields.firebrand"
+  },
+  "effects": {},
+  "max_cost": {
+    "base": 60,
+    "per_level_above_first": 20
+  },
+  "max_level": 2,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 20
+  },
+  "primary_items": "#spartanshields:shields_with_bash",
+  "slots": [
+    "mainhand",
+    "offhand"
+  ],
+  "supported_items": "#spartanshields:shields_with_bash",
+  "weight": 2
+}

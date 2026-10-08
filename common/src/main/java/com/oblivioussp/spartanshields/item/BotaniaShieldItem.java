@@ -21,9 +21,8 @@ public class BotaniaShieldItem extends BasicShieldItem implements IManaDamageShi
    }
 
    @Override
-   public void inventoryTick(ItemStack stack, Level level, Entity entityIn, int itemSlot, boolean isSelected) {
-      if (!level.isClientSide
-            && entityIn instanceof Player player
+   public void inventoryTick(ItemStack stack, net.minecraft.server.level.ServerLevel level, Entity entityIn, net.minecraft.world.entity.EquipmentSlot slot) {
+      if (entityIn instanceof Player player
             && stack.getDamageValue() > 0
             && BotaniaCompat.requestManaForTool(stack, player, this.manaPerDamage * 2)) {
          stack.setDamageValue(stack.getDamageValue() - 1);

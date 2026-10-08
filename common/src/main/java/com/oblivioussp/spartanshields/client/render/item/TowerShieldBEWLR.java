@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.datafixers.util.Pair;
 import com.oblivioussp.spartanshields.client.model.DarkSteelTowerShieldModel;
 import com.oblivioussp.spartanshields.client.model.ElementiumTowerShieldModel;
 import com.oblivioussp.spartanshields.client.model.EnderiumShieldModel;
@@ -16,36 +15,28 @@ import com.oblivioussp.spartanshields.client.model.ShieldBaseModel;
 import com.oblivioussp.spartanshields.client.model.TerrasteelTowerShieldModel;
 import com.oblivioussp.spartanshields.client.model.TowerShieldModel;
 import com.oblivioussp.spartanshields.init.ModItems;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import org.joml.Vector3f;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BannerRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.Material;
-import net.minecraft.core.Holder;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShieldItem;
-import net.minecraft.world.level.block.entity.BannerBlockEntity;
-import net.minecraft.world.level.block.entity.BannerPattern;
+import net.minecraft.world.level.block.entity.BannerPatternLayers;
 
 /**
  * Custom renderer for every tower shield.
- * <p>
- * Porting note: the Forge release registered this as an {@code IClientItemExtensions} renderer and
- * refreshed its models through {@code RegisterClientReloadListenersEvent}. Architectury 9.x has no
- * cross-loader item-renderer registry, so the renderer is invoked from
- * {@code mixin.MixinItemRenderer} and the models are (re)baked lazily through the vanilla
- * {@code EntityModelLoader}, which makes the class correct on both loaders regardless of when the
- * resource reload happens relative to layer registration.
  */
-public class TowerShieldBEWLR extends BlockEntityWithoutLevelRenderer {
+public class TowerShieldBEWLR implements SpecialModelRenderer<ItemStack> {
    public static final TowerShieldBEWLR INSTANCE = new TowerShieldBEWLR();
    private ShieldBaseModel baseShield;
    private ShieldBaseModel kiteShield;
@@ -62,7 +53,6 @@ public class TowerShieldBEWLR extends BlockEntityWithoutLevelRenderer {
    private ResourceManager bakedAgainst;
 
    private TowerShieldBEWLR() {
-      super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
       Builder<Item, TowerShieldRenderInfo> renderInfoMapBuilder = ImmutableMap.builder();
       renderInfoMapBuilder.put((Item)ModItems.WOODEN_TOWER_SHIELD.get(), TextureStitcher.RENDER_INFO_WOODEN_TOWER_SHIELD);
       renderInfoMapBuilder.put((Item)ModItems.STONE_TOWER_SHIELD.get(), TextureStitcher.RENDER_INFO_STONE_TOWER_SHIELD);
@@ -156,38 +146,57 @@ public class TowerShieldBEWLR extends BlockEntityWithoutLevelRenderer {
       return this.modelMap;
    }
 
+   @Override
+   public ItemStack extractArgument(ItemStack stack) {
+      return stack;
+   }
+
+   @Override
+   public void getExtents(Set<Vector3f> set) {
+      if (this.towerShield != null && this.towerShield.getPlate() != null) {
+         PoseStack poseStack = new PoseStack();
+         poseStack.scale(1.0F, -1.0F, -1.0F);
+         this.towerShield.getPlate().getExtentsForGui(poseStack, set);
+      }
+   }
+
+   @Override
+   public void render(ItemStack stack, ItemDisplayContext displayContext, PoseStack mStack, MultiBufferSource buffer, int packedLight, int packedOverlay, boolean hasFoil) {
+      this.renderByItem(stack, displayContext, mStack, buffer, packedLight, packedOverlay, hasFoil);
+   }
+
    public void renderByItem(ItemStack stack, ItemDisplayContext displayContext, PoseStack mStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
+      this.renderByItem(stack, displayContext, mStack, buffer, packedLight, packedOverlay, stack.hasFoil());
+   }
+
+   public void renderByItem(ItemStack stack, ItemDisplayContext displayContext, PoseStack mStack, MultiBufferSource buffer, int packedLight, int packedOverlay, boolean hasFoil) {
       ShieldBaseModel model = this.modelMap().get(stack.getItem());
       TowerShieldRenderInfo renderInfo = this.renderInfoMap.get(stack.getItem());
       if (model != null && renderInfo != null) {
-         CompoundTag blockEntityTag = stack.getTagElement("BlockEntityTag");
-         boolean isBannered = blockEntityTag != null && !blockEntityTag.isEmpty();
+         BannerPatternLayers bannerPatterns = stack.getOrDefault(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY);
+         DyeColor baseColor = stack.get(DataComponents.BASE_COLOR);
+         boolean isBannered = !bannerPatterns.layers().isEmpty() || baseColor != null;
          mStack.pushPose();
          mStack.scale(1.0F, -1.0F, -1.0F);
          Material material = renderInfo.getMaterial(isBannered);
          VertexConsumer consumer = material.sprite()
-            .wrap(ItemRenderer.getFoilBufferDirect(buffer, model.renderType(material.atlasLocation()), true, stack.hasFoil()));
-         model.renderExtraParts(mStack, consumer, packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+            .wrap(ItemRenderer.getFoilBuffer(buffer, model.renderType(material.atlasLocation()), true, hasFoil || stack.hasFoil()));
+         model.renderExtraParts(mStack, consumer, packedLight, packedOverlay, -1);
          if (isBannered) {
-            List<Pair<Holder<BannerPattern>, DyeColor>> bannerPatterns = BannerBlockEntity.createPatterns(
-               ShieldItem.getColor(stack), BannerBlockEntity.getItemPatterns(stack)
-            );
-            BannerRenderer.renderPatterns(mStack, buffer, packedLight, packedOverlay, model.getPlate(), material, false, bannerPatterns, stack.hasFoil());
+            BannerRenderer.renderPatterns(mStack, buffer, packedLight, packedOverlay, model.getPlate(), material, false, baseColor != null ? baseColor : DyeColor.WHITE, bannerPatterns);
          } else {
-            model.getPlate().render(mStack, consumer, packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+            model.getPlate().render(mStack, consumer, packedLight, packedOverlay, -1);
          }
 
          if (renderInfo.hasLayers()) {
+            int layerColor = ARGB.colorFromFloat(1.0F, renderInfo.getColourRed(), renderInfo.getColourGreen(), renderInfo.getColourBlue());
             model.renderLayers(
                mStack,
                buffer,
                renderInfo.getLayerRenderType(stack),
                packedLight,
                packedOverlay,
-               renderInfo.getColourRed(),
-               renderInfo.getColourGreen(),
-               renderInfo.getColourBlue(),
-               1.0F
+               layerColor
             );
          }
 

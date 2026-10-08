@@ -77,14 +77,9 @@ public class TierSS implements Tier {
       return this.enchantability;
    }
 
-   /**
-    * Still abstract in 1.20.1 (removed in 1.20.2); meaningless for shields, which is why the Forge
-    * release stubbed it out too.
-    */
    @Override
-   @Deprecated
-   public int getLevel() {
-      return 0;
+   public TagKey<net.minecraft.world.level.block.Block> getIncorrectBlocksForDrops() {
+      return net.minecraft.tags.BlockTags.INCORRECT_FOR_IRON_TOOL;
    }
 
    @Override

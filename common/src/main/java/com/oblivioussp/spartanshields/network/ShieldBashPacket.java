@@ -9,7 +9,7 @@ import com.oblivioussp.spartanshields.tags.ModItemTags;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.networking.simple.BaseC2SMessage;
 import dev.architectury.networking.simple.MessageType;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -70,7 +70,7 @@ public class ShieldBashPacket extends BaseC2SMessage {
    }
 
    @Override
-   public void write(FriendlyByteBuf buf) {
+   public void write(RegistryFriendlyByteBuf buf) {
       buf.writeEnum(this.hand);
       buf.writeInt(this.entityId);
       buf.writeBoolean(this.attackEntity);
@@ -81,11 +81,11 @@ public class ShieldBashPacket extends BaseC2SMessage {
     * ({@code IForgeItemStack}) and 1.20.1's EnchantmentHelper has no ItemStack overload, so the
     * level comes from the stack's enchantment map.
     */
-   private static int enchantmentLevel(ItemStack stack, Enchantment enchantment) {
-      return EnchantmentHelper.getEnchantments(stack).getOrDefault(enchantment, 0);
+   private static int enchantmentLevel(ItemStack stack, net.minecraft.resources.ResourceKey<Enchantment> enchantment) {
+      return ModEnchantments.getEnchantmentLevel(stack, enchantment);
    }
 
-   public static ShieldBashPacket decode(FriendlyByteBuf buf) {
+   public static ShieldBashPacket decode(RegistryFriendlyByteBuf buf) {
       return new ShieldBashPacket(buf.readEnum(InteractionHand.class), buf.readInt(), buf.readBoolean());
    }
 
@@ -148,16 +148,17 @@ public class ShieldBashPacket extends BaseC2SMessage {
             Mth.sin(player.getYRot() * ((float) Math.PI / 180.0F)),
             -Mth.cos(player.getYRot() * ((float) Math.PI / 180.0F)));
       float bashDamage = 1.0F;
-      if (enchantmentLevel(shieldStack, ModEnchantments.PAYBACK.get()) != 0) {
-         bashDamage += shieldStack.getOrCreateTag().getFloat(PaybackDamage.NBT_PAYBACK_DMG);
-         shieldStack.getTag().putFloat(PaybackDamage.NBT_PAYBACK_DMG, 0.0F);
+      if (enchantmentLevel(shieldStack, ModEnchantments.PAYBACK) != 0) {
+         net.minecraft.world.item.component.CustomData customData = shieldStack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY);
+         bashDamage += customData.copyTag().getFloat(PaybackDamage.NBT_PAYBACK_DMG);
+         net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, shieldStack, tag -> tag.putFloat(PaybackDamage.NBT_PAYBACK_DMG, 0.0F));
       }
 
       targetEntity.hurt(player.damageSources().playerAttack(player), bashDamage);
-      shieldStack.hurtAndBreak(5, player, entity -> entity.broadcastBreakEvent(hand));
-      int firebrandLvl = enchantmentLevel(shieldStack, ModEnchantments.FIREBRAND.get());
+      shieldStack.hurtAndBreak(5, player, hand == InteractionHand.MAIN_HAND ? net.minecraft.world.entity.EquipmentSlot.MAINHAND : net.minecraft.world.entity.EquipmentSlot.OFFHAND);
+      int firebrandLvl = enchantmentLevel(shieldStack, ModEnchantments.FIREBRAND);
       if (firebrandLvl != 0) {
-         targetEntity.setSecondsOnFire(firebrandLvl * 5);
+         targetEntity.igniteForSeconds(firebrandLvl * 5.0F);
       }
 
       return bashDamage > 1.0F;

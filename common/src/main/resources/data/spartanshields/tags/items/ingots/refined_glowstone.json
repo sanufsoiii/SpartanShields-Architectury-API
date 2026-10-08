@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "thermal:refined_glowstone_ingot",
+    "enderio:refined_glowstone_ingot"
+  ]
+}

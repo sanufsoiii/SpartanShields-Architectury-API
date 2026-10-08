@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "spartanshields:mod_loaded",
+      "modid": "botania"
+    }
+  ],
+  "key": {
+    "#": {
+      "tag": "spartanshields:ingots/elementium"
+    },
+    "/": {
+      "item": "botania:dreamwood_twig"
+    },
+    "m": {
+      "item": "botania:rune_mana"
+    },
+    "s": {
+      "item": "botania:rune_summer"
+    }
+  },
+  "pattern": [
+    "#s#",
+    "#/#",
+    "#m#"
+  ],
+  "result": {
+    "item": "spartanshields:elementium_tower_shield"
+  }
+}

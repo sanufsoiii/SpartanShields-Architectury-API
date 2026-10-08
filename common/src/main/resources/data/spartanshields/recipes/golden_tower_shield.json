@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [],
+  "group": "spartanshields:gold_shields",
+  "key": {
+    "#": {
+      "tag": "minecraft:ingots/gold"
+    },
+    "O": {
+      "item": "spartanshields:wooden_tower_shield"
+    }
+  },
+  "pattern": [
+    "###",
+    "#O#",
+    " # "
+  ],
+  "result": {
+    "item": "spartanshields:golden_tower_shield"
+  }
+}

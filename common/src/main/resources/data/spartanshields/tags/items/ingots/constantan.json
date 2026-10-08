@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "thermal:constantan_ingot",
+    "mekanism:constantan_ingot",
+    "enderio:constantan_ingot"
+  ]
+}

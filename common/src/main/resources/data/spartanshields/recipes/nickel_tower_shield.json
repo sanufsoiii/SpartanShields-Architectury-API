@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "spartanshields:type_disabled",
+      "disabled": [
+        "modded",
+        "nickel"
+      ]
+    },
+    {
+      "type": "spartanshields:any_mod_loaded",
+      "modids": [
+        "enderio",
+        "immersiveengineering",
+        "mekanism",
+        "thermal"
+      ]
+    }
+  ],
+  "group": "spartanshields:nickel_shields",
+  "key": {
+    "#": {
+      "tag": "spartanshields:ingots/nickel"
+    },
+    "O": {
+      "item": "spartanshields:wooden_tower_shield"
+    }
+  },
+  "pattern": [
+    "###",
+    "#O#",
+    " # "
+  ],
+  "result": {
+    "item": "spartanshields:nickel_tower_shield"
+  }
+}

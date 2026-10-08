@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "spartanshields",
+  "version": "${version}",
+  "name": "Spartan Shields",
+  "description": "Spartan Shields adds a variety of new shields to Minecraft. Architectury API port (Fabric target).",
+  "authors": [
+    "ObliviousSpartan"
+  ],
+  "contact": {
+    "homepage": "https://minecraft.curseforge.com/projects/spartan-shields",
+    "sources": "https://github.com/ObliviousSpartan/SpartanShields",
+    "issues": "https://github.com/ObliviousSpartan/SpartanShields/issues"
+  },
+  "license": "Apache-2.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.oblivioussp.spartanshields.fabric.SpartanShieldsFabric"
+    ],
+    "client": [
+      "com.oblivioussp.spartanshields.fabric.SpartanShieldsFabricClient"
+    ]
+  },
+  "mixins": [
+    "spartanshields.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=17",
+    "fabric-api": "*",
+    "architectury": ">=9.2.14"
+  }
+}

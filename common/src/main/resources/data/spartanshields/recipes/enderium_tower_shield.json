@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "spartanshields:type_disabled",
+      "disabled": [
+        "modded",
+        "enderium"
+      ]
+    },
+    {
+      "type": "spartanshields:any_mod_loaded",
+      "modids": [
+        "enderio"
+      ]
+    }
+  ],
+  "group": "spartanshields:enderium_shields",
+  "key": {
+    "#": {
+      "tag": "spartanshields:ingots/enderium"
+    },
+    "O": {
+      "item": "spartanshields:wooden_tower_shield"
+    }
+  },
+  "pattern": [
+    " # ",
+    "#O#",
+    " # "
+  ],
+  "result": {
+    "item": "spartanshields:enderium_tower_shield"
+  }
+}

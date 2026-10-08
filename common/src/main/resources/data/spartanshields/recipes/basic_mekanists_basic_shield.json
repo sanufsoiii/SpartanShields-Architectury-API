@@ -1,0 +1,43 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "spartanshields:type_disabled",
+      "disabled": [
+        "modded"
+      ]
+    },
+    {
+      "type": "spartanshields:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "#": {
+      "tag": "spartanshields:ingots/steel"
+    },
+    "O": {
+      "item": "spartanshields:wooden_basic_shield"
+    },
+    "a": {
+      "item": "mekanism:alloy_infused"
+    },
+    "b": {
+      "item": "mekanism:energy_tablet"
+    },
+    "c": {
+      "item": "mekanism:basic_control_circuit"
+    },
+    "d": {
+      "item": "mekanism:enriched_diamond"
+    }
+  },
+  "pattern": [
+    "ada",
+    "bOb",
+    "#c#"
+  ],
+  "result": {
+    "item": "spartanshields:basic_mekanists_basic_shield"
+  }
+}

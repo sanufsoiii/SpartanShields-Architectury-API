@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [],
+  "group": "spartanshields:stone_shields",
+  "key": {
+    "#": {
+      "tag": "spartanshields:cobblestone"
+    },
+    "O": {
+      "item": "spartanshields:wooden_basic_shield"
+    }
+  },
+  "pattern": [
+    " # ",
+    "#O#",
+    " # "
+  ],
+  "result": {
+    "item": "spartanshields:stone_basic_shield"
+  }
+}

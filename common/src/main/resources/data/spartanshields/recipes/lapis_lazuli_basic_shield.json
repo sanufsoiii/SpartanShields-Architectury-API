@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "spartanshields:type_disabled",
+      "disabled": [
+        "modded"
+      ]
+    },
+    {
+      "type": "spartanshields:mod_loaded",
+      "modid": "mekanism"
+    },
+    {
+      "type": "spartanshields:tag_empty",
+      "tag": "minecraft:gems/lapis"
+    }
+  ],
+  "group": "spartanshields:lapis_shields",
+  "key": {
+    "#": {
+      "tag": "minecraft:gems/lapis"
+    },
+    "O": {
+      "item": "spartanshields:wooden_basic_shield"
+    }
+  },
+  "pattern": [
+    " # ",
+    "#O#",
+    " # "
+  ],
+  "result": {
+    "item": "spartanshields:lapis_lazuli_basic_shield"
+  }
+}

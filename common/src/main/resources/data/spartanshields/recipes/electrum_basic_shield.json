@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "spartanshields:type_disabled",
+      "disabled": [
+        "modded",
+        "electrum"
+      ]
+    },
+    {
+      "type": "spartanshields:any_mod_loaded",
+      "modids": [
+        "enderio",
+        "immersiveengineering",
+        "mekanism",
+        "thermal"
+      ]
+    }
+  ],
+  "group": "spartanshields:electrum_shields",
+  "key": {
+    "#": {
+      "tag": "spartanshields:ingots/electrum"
+    },
+    "O": {
+      "item": "spartanshields:wooden_basic_shield"
+    }
+  },
+  "pattern": [
+    " # ",
+    "#O#",
+    " # "
+  ],
+  "result": {
+    "item": "spartanshields:electrum_basic_shield"
+  }
+}

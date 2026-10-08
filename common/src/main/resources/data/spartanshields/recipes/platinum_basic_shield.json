@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "spartanshields:type_disabled",
+      "disabled": [
+        "modded",
+        "platinum"
+      ]
+    },
+    {
+      "type": "spartanshields:any_mod_loaded",
+      "modids": [
+        "enderio",
+        "immersiveengineering",
+        "thermal"
+      ]
+    }
+  ],
+  "group": "spartanshields:platinum_shields",
+  "key": {
+    "#": {
+      "tag": "spartanshields:ingots/platinum"
+    },
+    "O": {
+      "item": "spartanshields:wooden_basic_shield"
+    }
+  },
+  "pattern": [
+    " # ",
+    "#O#",
+    " # "
+  ],
+  "result": {
+    "item": "spartanshields:platinum_basic_shield"
+  }
+}

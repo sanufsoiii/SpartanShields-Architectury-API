@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "thermal:aluminum_ingot",
+    "enderio:aluminum_ingot"
+  ]
+}

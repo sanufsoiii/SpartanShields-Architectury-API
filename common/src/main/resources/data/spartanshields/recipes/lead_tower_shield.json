@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "spartanshields:type_disabled",
+      "disabled": [
+        "modded",
+        "lead"
+      ]
+    },
+    {
+      "type": "spartanshields:any_mod_loaded",
+      "modids": [
+        "enderio",
+        "immersiveengineering",
+        "mekanism",
+        "thermal"
+      ]
+    }
+  ],
+  "group": "spartanshields:lead_shields",
+  "key": {
+    "#": {
+      "tag": "spartanshields:ingots/lead"
+    },
+    "O": {
+      "item": "spartanshields:wooden_tower_shield"
+    }
+  },
+  "pattern": [
+    "###",
+    "#O#",
+    " # "
+  ],
+  "result": {
+    "item": "spartanshields:lead_tower_shield"
+  }
+}

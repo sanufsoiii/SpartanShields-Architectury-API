@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "spartanshields:type_disabled",
+      "disabled": [
+        "modded",
+        "bronze"
+      ]
+    },
+    {
+      "type": "spartanshields:any_mod_loaded",
+      "modids": [
+        "enderio",
+        "mekanism",
+        "thermal"
+      ]
+    }
+  ],
+  "group": "spartanshields:bronze_shields",
+  "key": {
+    "#": {
+      "tag": "spartanshields:ingots/bronze"
+    },
+    "O": {
+      "item": "spartanshields:wooden_tower_shield"
+    }
+  },
+  "pattern": [
+    "###",
+    "#O#",
+    " # "
+  ],
+  "result": {
+    "item": "spartanshields:bronze_tower_shield"
+  }
+}

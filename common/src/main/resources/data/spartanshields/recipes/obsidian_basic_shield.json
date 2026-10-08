@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "spartanshields:type_disabled",
+      "disabled": [
+        "obsidian"
+      ]
+    },
+    {
+      "type": "spartanshields:tag_empty",
+      "tag": "spartanshields:obsidian"
+    }
+  ],
+  "group": "spartanshields:obsidian_shields",
+  "key": {
+    "#": {
+      "tag": "spartanshields:obsidian"
+    },
+    "O": {
+      "item": "spartanshields:wooden_basic_shield"
+    }
+  },
+  "pattern": [
+    " # ",
+    "#O#",
+    " # "
+  ],
+  "result": {
+    "item": "spartanshields:obsidian_basic_shield"
+  }
+}

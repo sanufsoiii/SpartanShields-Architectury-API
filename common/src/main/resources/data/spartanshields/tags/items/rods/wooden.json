@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:stick",
+    "thermal:wooden_rod",
+    "mekanism:wooden_rod",
+    "enderio:wooden_rod"
+  ]
+}

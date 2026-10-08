@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "thermal:lead_ingot",
+    "mekanism:lead_ingot",
+    "enderio:lead_ingot",
+    "immersiveengineering:lead_ingot"
+  ]
+}

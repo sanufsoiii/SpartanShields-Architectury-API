@@ -1,0 +1,39 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "spartanshields:type_disabled",
+      "disabled": [
+        "modded",
+        "steel"
+      ]
+    },
+    {
+      "type": "spartanshields:any_mod_loaded",
+      "modids": [
+        "enderio",
+        "immersiveengineering",
+        "mekanism",
+        "simpledm",
+        "thermal"
+      ]
+    }
+  ],
+  "group": "spartanshields:steel_shields",
+  "key": {
+    "#": {
+      "tag": "spartanshields:ingots/steel"
+    },
+    "O": {
+      "item": "spartanshields:wooden_tower_shield"
+    }
+  },
+  "pattern": [
+    "###",
+    "#O#",
+    " # "
+  ],
+  "result": {
+    "item": "spartanshields:steel_tower_shield"
+  }
+}

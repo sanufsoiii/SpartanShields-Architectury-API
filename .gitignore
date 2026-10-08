@@ -1,0 +1,37 @@
+# Gradle
+.gradle/
+build/
+*/build/
+out/
+bin/
+
+# Architectury / Loom
+.architectury-transformer/
+run/
+runs/
+*/run/
+*/runs/
+remappedSrc/
+.cache/
+
+# IDE / Editors
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.classpath
+.project
+
+# System & OS
+.DS_Store
+Thumbs.db
+.directory
+*.log
+
+# Intermediate generated artifacts
+tools/SpartanShields-mojang.jar
+
+# Keep Gradle wrapper jar
+!gradle/wrapper/gradle-wrapper.jar

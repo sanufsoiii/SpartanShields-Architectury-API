@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:gold_ingot",
+    "thermal:gold_ingot",
+    "mekanism:gold_ingot"
+  ]
+}

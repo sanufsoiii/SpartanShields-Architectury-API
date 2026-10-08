@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "minecraft:ingots/netherite"
+  },
+  "base": {
+    "item": "spartanshields:diamond_tower_shield"
+  },
+  "result": {
+    "item": "spartanshields:netherite_tower_shield"
+  },
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
+  }
+}

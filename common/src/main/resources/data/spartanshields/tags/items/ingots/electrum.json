@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "thermal:electrum_ingot",
+    "mekanism:electrum_ingot",
+    "enderio:electrum_ingot",
+    "immersiveengineering:electrum_ingot"
+  ]
+}

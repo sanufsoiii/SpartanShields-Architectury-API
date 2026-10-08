@@ -1,0 +1,39 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "spartanshields:type_disabled",
+      "disabled": [
+        "modded"
+      ]
+    },
+    {
+      "type": "spartanshields:mod_loaded",
+      "modid": "mekanism"
+    },
+    {
+      "type": "spartanshields:any_mod_loaded",
+      "modids": [
+        "enderio",
+        "thermal"
+      ]
+    }
+  ],
+  "group": "spartanshields:refined_obsidian_shields",
+  "key": {
+    "#": {
+      "tag": "spartanshields:ingots/refined_obsidian"
+    },
+    "O": {
+      "item": "spartanshields:wooden_basic_shield"
+    }
+  },
+  "pattern": [
+    " # ",
+    "#O#",
+    " # "
+  ],
+  "result": {
+    "item": "spartanshields:refined_obsidian_basic_shield"
+  }
+}

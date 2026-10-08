@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8.5",
+  "package": "com.oblivioussp.spartanshields.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MixinItemStack",
+    "MixinRecipeManager"
+  ],
+  "client": [
+    "MixinItemRenderer"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

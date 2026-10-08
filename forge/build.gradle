@@ -1,0 +1,114 @@
+plugins {
+    id "com.gradleup.shadow"
+}
+
+architectury {
+    platformSetupLoomIde()
+    forge()
+}
+
+configurations {
+    common {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentForge.extendsFrom common
+
+    shadowBundle {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+}
+
+dependencies {
+    // Porting note: Architectury API has no NeoForge build for MC 1.20.1, so the primary target is
+    // Forge 1.20.1 (47.4.x). Architectury Loom selects the platform through the `loom.platform`
+    // property (see forge/gradle.properties) and then reads the Forge userdev artifact from the
+    // `forge` configuration it creates itself (`modImplementation` would only put a plain mod jar on
+    // the classpath, and the Forge-patched Minecraft jar would never be built).
+    forge "net.minecraftforge:forge:$rootProject.minecraft_version-$rootProject.forge_version"
+    compileOnly "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
+
+    // Architectury API (Forge side of the 1.20.1 / 9.x line)
+    modImplementation "dev.architectury:architectury-forge:$rootProject.architectury_api_version"
+
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    shadowBundle project(path: ":common", configuration: "transformProductionForge")
+
+    annotationProcessor "org.spongepowered:mixin:$rootProject.mixin_version:processor"
+    compileOnly "org.spongepowered:mixin:$rootProject.mixin_version"
+    compileOnly "org.jetbrains:annotations:24.1.0"
+
+    // Optional integration: JEI (no-op plugin; JEI is absent-safe because the class
+    // is only touched when JEI itself scans plugin annotations)
+    compileOnly "mezz.jei:jei-1.20.1-forge:$rootProject.jei_version"
+
+    // Dev-only integration test mods, loaded into the Forge dev run only - they are not referenced
+    // by the production jar and end up in no published artifact.
+    //
+    // They are plain file dependencies on purpose: Modrinth's maven serves a version's *primary*
+    // file, which for these mods is the Fabric jar, and modern Fabric jars carry a
+    // `Fabric-Loom-Version` manifest entry that Architectury Loom 1.7 (the last line supporting the
+    // Forge platform) refuses to load ("Mod was built with a newer version of Loom"). The Forge
+    // jars in tools/devmods have no such marker. Refresh them with tools/fetch_devmods.py.
+    modLocalRuntime files(
+            rootProject.file("tools/devmods/mezz_config-1.20.1-forge-0.6.7.jar"),
+            rootProject.file("tools/devmods/jei-1.20.1-forge-15.62.0.217.jar"),
+            rootProject.file("tools/devmods/holdmyitems-1.20.1-4v2.0.jar"),
+            rootProject.file("tools/devmods/embeddium-0.3.11+mc1.20.1.jar"),
+            rootProject.file("tools/devmods/oculus-mc1.20.1-1.7.0.jar"))
+}
+
+processResources {
+    def replaceProperties = [
+            mod_id           : rootProject.mod_id,
+            mod_name         : rootProject.mod_name,
+            mod_version      : rootProject.mod_version,
+            minecraft_version: rootProject.minecraft_version,
+            forge_version    : rootProject.forge_version,
+            architectury_api_version: rootProject.architectury_api_version,
+    ]
+    inputs.properties replaceProperties
+
+    filesMatching("META-INF/mods.toml") {
+        expand replaceProperties
+    }
+}
+
+loom {
+    mixin {
+        useLegacyMixinAp = false
+    }
+    runs {
+        named("client") {
+            client()
+            ideConfigGenerated true
+            runDir "run"
+        }
+        named("server") {
+            server()
+            ideConfigGenerated true
+            runDir "run"
+        }
+
+        // Diagnostic run: boots straight into the test world so the client-side tag sync has
+        // happened before ClientHelper's diagnostics fire.
+        clientDiag {
+            client()
+            programArgs "--quickPlaySingleplayer", "New World"
+            ideConfigGenerated false
+            runDir "run"
+        }
+    }
+}
+
+shadowJar {
+    configurations = [project.configurations.shadowBundle]
+    archiveClassifier = "dev-shadow"
+}
+
+remapJar {
+    inputFile.set shadowJar.archiveFile
+}

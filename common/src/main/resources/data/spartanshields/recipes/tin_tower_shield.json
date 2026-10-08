@@ -1,0 +1,40 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "spartanshields:type_disabled",
+      "disabled": [
+        "modded",
+        "tin"
+      ]
+    },
+    {
+      "type": "spartanshields:any_mod_loaded",
+      "modids": [
+        "botania",
+        "enderio",
+        "immtech",
+        "mekanism",
+        "simpledm",
+        "thermal"
+      ]
+    }
+  ],
+  "group": "spartanshields:tin_shields",
+  "key": {
+    "#": {
+      "tag": "spartanshields:ingots/tin"
+    },
+    "O": {
+      "item": "spartanshields:wooden_tower_shield"
+    }
+  },
+  "pattern": [
+    "###",
+    "#O#",
+    " # "
+  ],
+  "result": {
+    "item": "spartanshields:tin_tower_shield"
+  }
+}

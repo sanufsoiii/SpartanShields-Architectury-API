@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "thermal:invar_ingot",
+    "mekanism:invar_ingot",
+    "enderio:invar_ingot"
+  ]
+}

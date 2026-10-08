@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "thermal:tin_ingot",
+    "mekanism:tin_ingot",
+    "enderio:tin_ingot",
+    "botania:tin_ingot"
+  ]
+}

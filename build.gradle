@@ -1,0 +1,61 @@
+plugins {
+    // Architectury Loom 1.7 is the last line that still provides the *Forge* platform
+    // configuration (`forge "net.minecraftforge:forge:..."`). Newer Loom releases folded Forge
+    // into NeoForge, which is incompatible with the MC 1.20.1 Architectury API line (9.x) that
+    // only publishes `architectury-forge`. See PORTING.md.
+    id "architectury-plugin" version "3.4-SNAPSHOT"
+    id "dev.architectury.loom" version "1.7-SNAPSHOT" apply false
+    id "com.gradleup.shadow" version "8.3.6" apply false
+}
+
+architectury {
+    minecraft = rootProject.minecraft_version
+}
+
+allprojects {
+    group = rootProject.maven_group
+    version = rootProject.mod_version + "+" + rootProject.minecraft_version
+}
+
+subprojects {
+    apply plugin: "dev.architectury.loom"
+    apply plugin: "architectury-plugin"
+    apply plugin: "maven-publish"
+
+    base {
+        archivesName = "$rootProject.mod_id-$project.name"
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url = "https://maven.architectury.dev/" }
+        maven { url = "https://maven.fabricmc.net/" }
+        maven { url = "https://maven.minecraftforge.net/" }
+        maven { url = "https://maven.parchmentmc.org" }
+        maven { url = "https://maven.theillusivec4.top/" }
+        maven { url = "https://api.modrinth.com/maven" }
+        maven { url = "https://maven.blamejared.com" }
+    }
+
+    dependencies {
+        minecraft "com.mojang:minecraft:$rootProject.minecraft_version"
+        mappings loom.layered() {
+            officialMojangMappings()
+            parchment("org.parchmentmc.data:parchment-$rootProject.parchment_minecraft_version:$rootProject.parchment_version@zip")
+        }
+    }
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+        withSourcesJar()
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = "UTF-8"
+        options.release = 21
+        // keep javac reporting every remaining error instead of stopping at the first 100
+        options.compilerArgs << "-Xmaxerrs" << "5000"
+    }
+}

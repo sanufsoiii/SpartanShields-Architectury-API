@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "thermal:osmium_ingot",
+    "mekanism:osmium_ingot",
+    "enderio:osmium_ingot"
+  ]
+}

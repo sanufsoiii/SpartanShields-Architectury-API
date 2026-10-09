@@ -116,8 +116,8 @@ public class SpartanShieldsForge {
          Log.info("Setting up client for " + SpartanShields.NAME);
          ClientHelper.registerShared();
          ClientEventHandler.register();
-         ClientRenderTransforms.setApplier((model, displayContext, pose, swing) ->
-               net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(pose, model, displayContext, swing));
+         ClientRenderTransforms.setApplier((model, displayContext, pose, leftHand) ->
+               net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(pose, model, displayContext, leftHand));
       }
 
 

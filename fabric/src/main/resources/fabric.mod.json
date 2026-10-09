@@ -30,6 +30,6 @@
     "minecraft": "~${minecraft_version}",
     "java": ">=21",
     "fabric-api": "*",
-    "architectury": ">=13.0.8"
+    "architectury": ">=12.1.4"
   }
 }

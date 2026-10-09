@@ -60,6 +60,8 @@ dependencies {
 }
 
 processResources {
+    from project(":common").sourceSets.main.resources
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     def replaceProperties = [
             mod_id           : rootProject.mod_id,
             mod_name         : rootProject.mod_name,

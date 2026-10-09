@@ -39,7 +39,7 @@ public abstract class MixinItemRenderer {
          + "ZLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;"
          + "IILnet/minecraft/client/resources/model/BakedModel;)V",
          at = @At("HEAD"), cancellable = true)
-   private void spartanshields$renderTowerShield(ItemStack stack, ItemDisplayContext displayContext, boolean swing,
+   private void spartanshields$renderTowerShield(ItemStack stack, ItemDisplayContext displayContext, boolean leftHand,
                                                  PoseStack pose, MultiBufferSource buffers, int packedLight,
                                                  int packedOverlay, BakedModel model, CallbackInfo callback) {
       if (!(stack.getItem() instanceof ShieldBaseItem shield) || !shield.isTowerShield()) {
@@ -48,7 +48,7 @@ public abstract class MixinItemRenderer {
 
       pose.pushPose();
       try {
-         ClientRenderTransforms.apply(model, displayContext, pose, swing);
+         ClientRenderTransforms.apply(model, displayContext, pose, leftHand);
          pose.translate(-0.5F, -0.5F, -0.5F);
 
          BlockEntityWithoutLevelRenderer renderer = TowerShieldBEWLR.INSTANCE;

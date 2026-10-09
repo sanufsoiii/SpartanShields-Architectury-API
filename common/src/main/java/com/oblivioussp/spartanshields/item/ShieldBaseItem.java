@@ -33,8 +33,8 @@ public class ShieldBaseItem extends ShieldItem {
    }
 
    @Override
-   public String getDescriptionId(ItemStack stack) {
-      return this.getDescriptionId();
+   public Component getName(ItemStack stack) {
+      return Component.translatable(this.getDescriptionId());
    }
 
    public int getMaxDamage(ItemStack stack) {

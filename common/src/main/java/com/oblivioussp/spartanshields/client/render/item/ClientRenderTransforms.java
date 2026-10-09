@@ -24,13 +24,13 @@ import net.minecraft.world.item.ItemDisplayContext;
 public class ClientRenderTransforms {
    /** Loader-specific part of {@code ItemRenderer#render}'s preamble. */
    public interface Applier {
-      void apply(BakedModel model, ItemDisplayContext displayContext, PoseStack pose, boolean swing);
+      void apply(BakedModel model, ItemDisplayContext displayContext, PoseStack pose, boolean leftHand);
    }
 
    // In 1.20.1 BakedModel exposes the transforms rather than applying them, so vanilla's
    // ItemRenderer reads ItemTransforms#getTransform(ctx).apply(leftHand, pose).
-   private static final Applier VANILLA = (model, displayContext, pose, swing) ->
-         model.getTransforms().getTransform(displayContext).apply(false, pose);
+   private static final Applier VANILLA = (model, displayContext, pose, leftHand) ->
+         model.getTransforms().getTransform(displayContext).apply(leftHand, pose);
 
    private static Applier applier = VANILLA;
 
@@ -38,8 +38,8 @@ public class ClientRenderTransforms {
       applier = newApplier == null ? VANILLA : newApplier;
    }
 
-   public static void apply(BakedModel model, ItemDisplayContext displayContext, PoseStack pose, boolean swing) {
-      applier.apply(model, displayContext, pose, swing);
+   public static void apply(BakedModel model, ItemDisplayContext displayContext, PoseStack pose, boolean leftHand) {
+      applier.apply(model, displayContext, pose, leftHand);
    }
 
    private ClientRenderTransforms() {

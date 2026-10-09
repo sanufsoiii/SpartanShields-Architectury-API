@@ -35,6 +35,11 @@ public class ShieldBaseItem extends ShieldItem {
       return false;
    }
 
+   @Override
+   public String getDescriptionId(ItemStack stack) {
+      return this.getDescriptionId();
+   }
+
    /**
     * Configured durability.
     * <p>

@@ -23,9 +23,8 @@ import java.util.function.Consumer;
  */
 @Mixin(ItemStack.class)
 public abstract class MixinItemStack {
-   @Inject(method = "hurtAndBreak", at = @At("HEAD"), cancellable = true)
-   private <T extends LivingEntity> void spartanshields$payForDamage(int amount, T entity, Consumer<T> onBroken,
-                                                                      CallbackInfo callback) {
+   @Inject(method = "hurtAndBreak(ILnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;)V", at = @At("HEAD"), cancellable = true)
+   private void spartanshields$payForDamageSlot(int amount, LivingEntity entity, net.minecraft.world.entity.EquipmentSlot slot, CallbackInfo callback) {
       ItemStack self = (ItemStack) (Object) this;
       if (self.getItem() instanceof IManaDamageShield manaShield && manaShield.payForDamage(self, amount, entity)) {
          callback.cancel();

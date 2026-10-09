@@ -23,9 +23,11 @@ configurations {
 }
 
 dependencies {
-    // Dev-only runtime mods: JEI + Hold My Items
+    // Dev-only runtime mods: JEI + Hold My Items + Cloth Config + ModMenu
     modLocalRuntime "mezz.jei:jei-1.21.8-fabric:24.2.0.6"
-    modLocalRuntime "maven.modrinth:hold-my-items:5.0L4"
+    modLocalRuntime "maven.modrinth:cloth-config:cz0b1j8R"
+    modLocalRuntime "maven.modrinth:modmenu:ku5NivOP"
+    modLocalRuntime "maven.modrinth:hold-my-items:EpvSVHji"
 
     modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
     modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"

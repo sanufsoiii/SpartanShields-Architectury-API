@@ -19,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RecipeValidationTest {
 
    private static final File DATA_DIR = new File("src/main/resources/data/spartanshields");
-   private static final File RECIPES_DIR = new File(DATA_DIR, "recipes");
-   private static final File TAGS_DIR = new File(DATA_DIR, "tags/items");
+   private static final File RECIPES_DIR = new File(DATA_DIR, "recipe");
+   private static final File TAGS_DIR = new File(DATA_DIR, "tags/item");
 
    @Test
    public void testAllRecipesExistAndParse() throws Exception {

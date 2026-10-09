@@ -25,7 +25,7 @@ configurations {
 dependencies {
     // Dev-only runtime mods: JEI + Hold My Items
     modLocalRuntime "mezz.jei:jei-1.21.5-fabric:21.4.0.27"
-    modLocalRuntime "maven.modrinth:hold-my-items:5.0L4"
+    modLocalRuntime "maven.modrinth:hold-my-items:Z3EXJexS"
 
     modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
     modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"

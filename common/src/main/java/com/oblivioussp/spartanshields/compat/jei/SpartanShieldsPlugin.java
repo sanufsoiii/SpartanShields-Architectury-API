@@ -6,7 +6,7 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * No-op JEI plugin kept for parity with the Forge release (it registers nothing, it only tells
@@ -15,10 +15,10 @@ import net.minecraft.resources.ResourceLocation;
  */
 @JeiPlugin
 public class SpartanShieldsPlugin implements IModPlugin {
-   private static final ResourceLocation PLUGIN_UID = new ResourceLocation(SpartanShields.ID, "jei_plugin");
+   private static final Identifier PLUGIN_UID = Identifier.fromNamespaceAndPath(SpartanShields.ID, "jei_plugin");
 
    @Override
-   public ResourceLocation getPluginUid() {
+   public Identifier getPluginUid() {
       return PLUGIN_UID;
    }
 

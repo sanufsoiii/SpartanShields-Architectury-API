@@ -17,8 +17,10 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -27,28 +29,13 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-/**
- * Porting note: the Forge release hooked {@code InputEvent.MouseButton} / {@code InputEvent.Key}
- * plus {@code ItemTooltipEvent}. The equivalents are Architectury's {@link ClientRawInputEvent}
- * (mouse clicks and key presses) and {@link ClientTooltipEvent#ITEM}.
- */
 public class ClientEventHandler {
    public static void register() {
-      // MouseClicked: (Minecraft, button, action, modifiers)
-      //
-      // Porting note: the *post* event is required. The Forge release subscribed to
-      // InputEvent.MouseButton, which Forge fires at the end of MouseHandler#onPress - i.e. after
-      // vanilla has already bumped the attack key's click counter, which is what
-      // keyAttack.consumeClick() reads. MOUSE_CLICKED_PRE fires before that, so consumeClick()
-      // always returned false and the bash could never be triggered by a mouse click; the player
-      // had to work around it with release/press timing instead of simply holding right-click and
-      // clicking left.
-      ClientRawInputEvent.MOUSE_CLICKED_POST.register((mc, button, action, modifiers) -> {
+      ClientRawInputEvent.MOUSE_CLICKED_POST.register((mc, buttonInfo, action) -> {
          checkForShieldBash();
          return EventResult.pass();
       });
-      // KeyPressed: (Minecraft, key, scancode, modifiers, action)
-      ClientRawInputEvent.KEY_PRESSED.register((mc, key, scancode, modifiers, action) -> {
+      ClientRawInputEvent.KEY_PRESSED.register((mc, action, keyEvent) -> {
          checkForShieldBash();
          return EventResult.pass();
       });
@@ -78,11 +65,12 @@ public class ClientEventHandler {
 
       ItemStack shieldStack = player.getUseItem();
       InteractionHand shieldHand = player.getUsedItemHand();
-      if (player.getCooldowns().isOnCooldown(shieldStack.getItem())) {
+      if (player.getCooldowns().isOnCooldown(shieldStack)) {
          return;
       }
 
-      HitResult result = getEntityMouseOverExtended(mc.gameMode.getPickRange());
+      float reach = (float) player.entityInteractionRange();
+      HitResult result = getEntityMouseOverExtended(reach);
       if (result == null) {
          return;
       }
@@ -103,7 +91,7 @@ public class ClientEventHandler {
       new ShieldBashPacket(shieldHand, entId, attackEntity).sendToServer();
    }
 
-   private static void onItemTooltip(ItemStack stack, List<Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
+   private static void onItemTooltip(ItemStack stack, List<Component> tooltip, Item.TooltipContext context, TooltipFlag flag) {
       if (Config.INSTANCE.disableShieldBash.get()
             || stack.isEmpty()
             || !stack.is(ModItemTags.SHIELDS_WITH_BASH)
@@ -119,8 +107,6 @@ public class ClientEventHandler {
                   .withStyle(ChatFormatting.GRAY))
             .withStyle(ChatFormatting.GOLD);
 
-      // The Forge version inserted the line at index 1 (right under the item name). Architectury
-      // hands over the live tooltip list, so the insertion is kept when the list allows it.
       try {
          tooltip.add(1, line);
       } catch (UnsupportedOperationException e) {
@@ -140,16 +126,7 @@ public class ClientEventHandler {
          double d0 = reach;
          HitResult rayTrace = viewEntity.pick(d0, 0.0F, false);
          Vec3 eyePos = viewEntity.getEyePosition(0.0F);
-         boolean flag = false;
-         double d1 = d0;
-         if (mc.gameMode.hasFarPickRange() && d0 < 6.0) {
-            d1 = 6.0;
-            d0 = d1;
-         } else if (d0 > reach) {
-            flag = true;
-         }
-
-         d1 *= d1;
+         double d1 = d0 * d0;
          if (rayTrace != null) {
             d1 = rayTrace.getLocation().distanceToSqr(eyePos);
          }
@@ -162,13 +139,11 @@ public class ClientEventHandler {
          if (entityRayTrace != null) {
             Vec3 hitVec = entityRayTrace.getLocation();
             double d2 = eyePos.distanceToSqr(hitVec);
-            if (flag && d2 > reach * reach) {
-               result = BlockHitResult.miss(hitVec, Direction.getNearest(lookVec.x, lookVec.y, lookVec.z), BlockPos.containing(hitVec));
-            } else if (d2 < d1 || result == null) {
+            if (d2 < d1 || result == null) {
                result = entityRayTrace;
             }
          } else {
-            result = BlockHitResult.miss(attackVec, Direction.getNearest(lookVec.x, lookVec.y, lookVec.z), BlockPos.containing(attackVec));
+            result = BlockHitResult.miss(attackVec, Direction.getApproximateNearest(lookVec), BlockPos.containing(attackVec));
          }
       }
 

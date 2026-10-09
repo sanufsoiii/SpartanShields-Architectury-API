@@ -3,7 +3,7 @@ package com.oblivioussp.spartanshields.crafting.condition;
 import com.google.gson.JsonObject;
 import com.oblivioussp.spartanshields.SpartanShields;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -20,16 +20,16 @@ import net.minecraft.world.item.crafting.Ingredient;
 public class TagEmptyCondition implements SpartanCondition {
    public static final String ID = SpartanShields.ID + ":tag_empty";
 
-   private ResourceLocation tagLocation;
+   private Identifier tagLocation;
 
    public TagEmptyCondition() {
    }
 
-   public TagEmptyCondition(ResourceLocation tagLocation) {
+   public TagEmptyCondition(Identifier tagLocation) {
       this.tagLocation = tagLocation;
    }
 
-   public ResourceLocation getTagLocation() {
+   public Identifier getTagLocation() {
       return this.tagLocation;
    }
 
@@ -43,7 +43,7 @@ public class TagEmptyCondition implements SpartanCondition {
 
    @Override
    public TagEmptyCondition read(JsonObject json) {
-      this.tagLocation = ResourceLocation.tryParse(json.get("tag").getAsString());
+      this.tagLocation = Identifier.tryParse(json.get("tag").getAsString());
       return this;
    }
 
@@ -54,7 +54,6 @@ public class TagEmptyCondition implements SpartanCondition {
       }
 
       TagKey<Item> key = TagKey.create(Registries.ITEM, this.tagLocation);
-      Ingredient ingredient = Ingredient.of(key);
-      return ingredient.getItems().length == 0;
+      return net.minecraft.core.registries.BuiltInRegistries.ITEM.get(key).map(set -> set.size() == 0).orElse(true);
    }
 }

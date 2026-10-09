@@ -10,7 +10,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 
 /**
  * Geometry ported verbatim from the Forge release: the model only touches vanilla client
@@ -27,7 +27,7 @@ public class MekanismTowerShieldModel extends ShieldBaseModel {
    private final ImmutableList<ModelPart> extraParts;
 
    public MekanismTowerShieldModel(ModelPart rootModel) {
-      super(RenderType::entityTranslucent, rootModel);
+      super(net.minecraft.client.renderer.rendertype.RenderTypes::entityTranslucent, rootModel);
       this.plateExtra = rootModel.getChild("plate_extra");
       this.upper = rootModel.getChild("plate_upper");
       this.lower = rootModel.getChild("plate_lower");
@@ -100,10 +100,10 @@ public class MekanismTowerShieldModel extends ShieldBaseModel {
 
    @Override
    public void renderExtraParts(
-      PoseStack mStack, VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha
+      PoseStack mStack, VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn, int color
    ) {
-      super.renderExtraParts(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-      this.extraParts.forEach(model -> model.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha));
+      super.renderExtraParts(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color);
+      this.extraParts.forEach(model -> model.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color));
    }
 
    @Override
@@ -113,12 +113,9 @@ public class MekanismTowerShieldModel extends ShieldBaseModel {
       RenderType renderTypeIn,
       int packedLightIn,
       int packedOverlayIn,
-      float red,
-      float green,
-      float blue,
-      float alpha
+      int color
    ) {
       VertexConsumer consumer = bufferIn.getBuffer(renderTypeIn);
-      this.root.render(mStack, consumer, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+      this.root.render(mStack, consumer, packedLightIn, packedOverlayIn, color);
    }
 }

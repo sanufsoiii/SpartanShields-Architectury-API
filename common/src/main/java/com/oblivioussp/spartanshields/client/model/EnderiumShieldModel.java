@@ -70,13 +70,13 @@ public class EnderiumShieldModel extends ShieldBaseModel {
 
    @Override
    public void renderExtraParts(
-      PoseStack mStack, VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha
+      PoseStack mStack, VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn, int color
    ) {
-      super.renderExtraParts(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-      this.plateLeft.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-      this.plateRight.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-      this.plateUpLeft.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-      this.plateUpRight.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-      this.plateDown.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+      super.renderExtraParts(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color);
+      this.plateLeft.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color);
+      this.plateRight.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color);
+      this.plateUpLeft.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color);
+      this.plateUpRight.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color);
+      this.plateDown.render(mStack, vertexBuilder, packedLightIn, packedOverlayIn, color);
    }
 }

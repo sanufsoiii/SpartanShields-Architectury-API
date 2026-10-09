@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.datafixers.util.Pair;
 import com.oblivioussp.spartanshields.client.model.DarkSteelTowerShieldModel;
 import com.oblivioussp.spartanshields.client.model.ElementiumTowerShieldModel;
 import com.oblivioussp.spartanshields.client.model.EnderiumShieldModel;
@@ -16,36 +15,28 @@ import com.oblivioussp.spartanshields.client.model.ShieldBaseModel;
 import com.oblivioussp.spartanshields.client.model.TerrasteelTowerShieldModel;
 import com.oblivioussp.spartanshields.client.model.TowerShieldModel;
 import com.oblivioussp.spartanshields.init.ModItems;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import org.joml.Vector3f;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BannerRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.Material;
-import net.minecraft.core.Holder;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShieldItem;
-import net.minecraft.world.level.block.entity.BannerBlockEntity;
-import net.minecraft.world.level.block.entity.BannerPattern;
+import net.minecraft.world.level.block.entity.BannerPatternLayers;
 
 /**
  * Custom renderer for every tower shield.
- * <p>
- * Porting note: the Forge release registered this as an {@code IClientItemExtensions} renderer and
- * refreshed its models through {@code RegisterClientReloadListenersEvent}. Architectury 9.x has no
- * cross-loader item-renderer registry, so the renderer is invoked from
- * {@code mixin.MixinItemRenderer} and the models are (re)baked lazily through the vanilla
- * {@code EntityModelLoader}, which makes the class correct on both loaders regardless of when the
- * resource reload happens relative to layer registration.
  */
-public class TowerShieldBEWLR extends BlockEntityWithoutLevelRenderer {
+public class TowerShieldBEWLR implements SpecialModelRenderer<ItemStack> {
    public static final TowerShieldBEWLR INSTANCE = new TowerShieldBEWLR();
    private ShieldBaseModel baseShield;
    private ShieldBaseModel kiteShield;
@@ -62,7 +53,6 @@ public class TowerShieldBEWLR extends BlockEntityWithoutLevelRenderer {
    private ResourceManager bakedAgainst;
 
    private TowerShieldBEWLR() {
-      super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
       Builder<Item, TowerShieldRenderInfo> renderInfoMapBuilder = ImmutableMap.builder();
       renderInfoMapBuilder.put((Item)ModItems.WOODEN_TOWER_SHIELD.get(), TextureStitcher.RENDER_INFO_WOODEN_TOWER_SHIELD);
       renderInfoMapBuilder.put((Item)ModItems.STONE_TOWER_SHIELD.get(), TextureStitcher.RENDER_INFO_STONE_TOWER_SHIELD);
@@ -156,39 +146,68 @@ public class TowerShieldBEWLR extends BlockEntityWithoutLevelRenderer {
       return this.modelMap;
    }
 
-   public void renderByItem(ItemStack stack, ItemDisplayContext displayContext, PoseStack mStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
+   @Override
+   public ItemStack extractArgument(ItemStack stack) {
+      return stack;
+   }
+
+   @Override
+   public void getExtents(java.util.function.Consumer<org.joml.Vector3fc> consumer) {
+      if (this.towerShield != null && this.towerShield.getPlate() != null) {
+         PoseStack poseStack = new PoseStack();
+         poseStack.scale(1.0F, -1.0F, -1.0F);
+         this.towerShield.getPlate().getExtentsForGui(poseStack, consumer);
+      }
+   }
+
+   @Override
+   public void submit(ItemStack stack, ItemDisplayContext displayContext, PoseStack mStack, net.minecraft.client.renderer.SubmitNodeCollector collector, int packedLight, int packedOverlay, boolean hasFoil, int seed) {
       ShieldBaseModel model = this.modelMap().get(stack.getItem());
       TowerShieldRenderInfo renderInfo = this.renderInfoMap.get(stack.getItem());
       if (model != null && renderInfo != null) {
-         CompoundTag blockEntityTag = stack.getTagElement("BlockEntityTag");
-         boolean isBannered = blockEntityTag != null && !blockEntityTag.isEmpty();
+         BannerPatternLayers bannerPatterns = stack.getOrDefault(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY);
+         DyeColor baseColor = stack.get(DataComponents.BASE_COLOR);
+         boolean isBannered = !bannerPatterns.layers().isEmpty() || baseColor != null;
          mStack.pushPose();
          mStack.scale(1.0F, -1.0F, -1.0F);
          Material material = renderInfo.getMaterial(isBannered);
-         VertexConsumer consumer = material.sprite()
-            .wrap(ItemRenderer.getFoilBufferDirect(buffer, model.renderType(material.atlasLocation()), true, stack.hasFoil()));
-         model.renderExtraParts(mStack, consumer, packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+         net.minecraft.client.resources.model.AtlasManager materials = Minecraft.getInstance().getAtlasManager();
+         net.minecraft.client.renderer.texture.TextureAtlasSprite sprite = materials.get(material);
+
+         collector.submitCustomGeometry(mStack, model.renderType(material.atlasLocation()), (pose, consumer) -> {
+            VertexConsumer wrapped = sprite.wrap(consumer);
+            model.renderExtraParts(mStack, wrapped, packedLight, packedOverlay, -1);
+         });
+
          if (isBannered) {
-            List<Pair<Holder<BannerPattern>, DyeColor>> bannerPatterns = BannerBlockEntity.createPatterns(
-               ShieldItem.getColor(stack), BannerBlockEntity.getItemPatterns(stack)
+            BannerRenderer.submitPatterns(
+               materials,
+               mStack,
+               collector,
+               packedLight,
+               packedOverlay,
+               model,
+               net.minecraft.util.Unit.INSTANCE,
+               material,
+               false,
+               baseColor != null ? baseColor : DyeColor.WHITE,
+               bannerPatterns,
+               hasFoil || stack.hasFoil(),
+               null,
+               seed
             );
-            BannerRenderer.renderPatterns(mStack, buffer, packedLight, packedOverlay, model.getPlate(), material, false, bannerPatterns, stack.hasFoil());
          } else {
-            model.getPlate().render(mStack, consumer, packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+            collector.submitCustomGeometry(mStack, model.renderType(material.atlasLocation()), (pose, consumer) -> {
+               VertexConsumer wrapped = sprite.wrap(consumer);
+               model.getPlate().render(mStack, wrapped, packedLight, packedOverlay, -1);
+            });
          }
 
          if (renderInfo.hasLayers()) {
-            model.renderLayers(
-               mStack,
-               buffer,
-               renderInfo.getLayerRenderType(stack),
-               packedLight,
-               packedOverlay,
-               renderInfo.getColourRed(),
-               renderInfo.getColourGreen(),
-               renderInfo.getColourBlue(),
-               1.0F
-            );
+            int layerColor = ARGB.colorFromFloat(1.0F, renderInfo.getColourRed(), renderInfo.getColourGreen(), renderInfo.getColourBlue());
+            collector.submitCustomGeometry(mStack, renderInfo.getLayerRenderType(stack), (pose, consumer) -> {
+               model.renderLayers(mStack, consumer, renderInfo.getLayerRenderType(stack), packedLight, packedOverlay, layerColor);
+            });
          }
 
          mStack.popPose();

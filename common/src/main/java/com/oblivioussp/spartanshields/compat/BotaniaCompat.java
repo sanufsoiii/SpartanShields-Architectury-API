@@ -4,13 +4,14 @@ import com.oblivioussp.spartanshields.util.Constants;
 import com.oblivioussp.spartanshields.util.Log;
 import com.oblivioussp.spartanshields.util.TierSS;
 import dev.architectury.platform.Platform;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -45,8 +46,8 @@ public final class BotaniaCompat {
       return Platform.isModLoaded(Constants.BOTANIA_MODID);
    }
 
-   /** Botania's manasteel tier, or {@code fallback} when Botania is unavailable. */
-   public static Tier tier(String getterName, TierSS fallback) {
+   /** Botania's tier, or {@code fallback} when Botania is unavailable. */
+   public static TierSS tier(String getterName, TierSS fallback) {
       Method instance = BOTANIA_INSTANCE.get();
       Method getter = method(API_CLASS, getterName).get();
       if (instance == null || getter == null) {
@@ -55,7 +56,10 @@ public final class BotaniaCompat {
       try {
          Object api = instance.invoke(null);
          Object tier = getter.invoke(api);
-         return tier instanceof Tier botaniaTier ? botaniaTier : fallback;
+         if (tier instanceof ToolMaterial toolMaterial) {
+            return new TierSS(toolMaterial, fallback.getRepairTag());
+         }
+         return fallback;
       } catch (ReflectiveOperationException | RuntimeException e) {
          Log.warn("Botania: failed to read tier '" + getterName + "': " + e);
          return fallback;
@@ -76,6 +80,11 @@ public final class BotaniaCompat {
          Log.warn("Botania: failed to request mana: " + e);
          return false;
       }
+   }
+
+   public static net.minecraft.core.Holder<Attribute> pixieSpawnChanceHolder() {
+      Identifier loc = Identifier.fromNamespaceAndPath(Constants.BOTANIA_MODID, "pixie_spawn_chance");
+      return net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.get(loc).map(h -> (net.minecraft.core.Holder<Attribute>) h).orElse(null);
    }
 
    public static Attribute pixieSpawnChanceAttribute() {

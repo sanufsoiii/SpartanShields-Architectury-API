@@ -13,7 +13,7 @@ import com.oblivioussp.spartanshields.client.model.TerrasteelTowerShieldModel;
 import com.oblivioussp.spartanshields.client.model.TowerShieldModel;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Porting note: the Forge release declared {@code ModelLayerLocation} constants and registered
@@ -34,7 +34,7 @@ public class ModelLayers {
    public static final ModelLayerLocation DARK_STEEL_SHIELD = createMainModelLayer("dark_steel_shield");
 
    public static ModelLayerLocation createMainModelLayer(String location) {
-      return new ModelLayerLocation(new ResourceLocation(SpartanShields.ID, location), "main");
+      return new ModelLayerLocation(Identifier.fromNamespaceAndPath(SpartanShields.ID, location), "main");
    }
 
    public static void register() {

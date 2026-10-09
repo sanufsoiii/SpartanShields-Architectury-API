@@ -4,9 +4,9 @@ import com.oblivioussp.spartanshields.config.Config;
 import com.oblivioussp.spartanshields.util.TierSS;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 
 import java.util.List;
 
@@ -23,10 +23,10 @@ public class BasicShieldItem extends ShieldBaseItem {
    }
 
    @Override
-   public void appendHoverText(ItemStack stack, Level levelIn, List<Component> tooltip, TooltipFlag flagIn) {
+   public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
       tooltip.add(Component.translatable("tooltip.spartanshields.protection", this.getMaxDamage(stack)));
 
-      if (levelIn != null && !Config.INSTANCE.forceDisableUncraftableTooltips.get()) {
+      if (!Config.INSTANCE.forceDisableUncraftableTooltips.get()) {
          var tagOpt = net.minecraft.core.registries.BuiltInRegistries.ITEM.getTag(this.material.getRepairTag());
          if (tagOpt.isEmpty() || tagOpt.get().size() == 0) {
             tooltip.add(Component.translatable("tooltip.spartanshields.uncraftable_missing_material", this.material.getRepairTagName())
@@ -34,7 +34,7 @@ public class BasicShieldItem extends ShieldBaseItem {
          }
       }
 
-      super.appendHoverText(stack, levelIn, tooltip, flagIn);
+      super.appendHoverText(stack, context, tooltip, flagIn);
    }
 
    @Override

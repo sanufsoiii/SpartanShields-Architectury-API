@@ -50,9 +50,9 @@ public class ClientHelper {
                   (stack, world, living, value) -> living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F);
          }
 
-         if (entry.get() instanceof FEPoweredShieldItem) {
+         if (entry.get() instanceof FEPoweredShieldItem powered) {
             ItemPropertiesRegistry.register(entry.get(), DISABLED_PROPERTY,
-                  (stack, world, living, value) -> stack.getOrCreateTag().getInt(FEPoweredShieldItem.NBT_ENERGY) <= 0 ? 1.0F : 0.0F);
+                  (stack, world, living, value) -> powered.getFEStored(stack) <= 0 ? 1.0F : 0.0F);
          }
       }
 

@@ -41,6 +41,8 @@ dependencies {
 }
 
 processResources {
+    from project(":common").sourceSets.main.resources
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     def replaceProperties = [
         minecraft_version: rootProject.minecraft_version,
         mod_id: rootProject.mod_id,

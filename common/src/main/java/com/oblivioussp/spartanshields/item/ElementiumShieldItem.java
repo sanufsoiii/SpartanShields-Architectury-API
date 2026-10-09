@@ -1,38 +1,31 @@
 package com.oblivioussp.spartanshields.item;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
+import com.oblivioussp.spartanshields.SpartanShields;
 import com.oblivioussp.spartanshields.compat.BotaniaCompat;
 import com.oblivioussp.spartanshields.util.TierSS;
-import net.minecraft.world.entity.EquipmentSlot;
+import java.util.UUID;
+import net.minecraft.core.Holder;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 
 public class ElementiumShieldItem extends BotaniaShieldItem {
+   private static final UUID PIXIE_SPAWN_UUID = UUID.fromString("0a6476b7-a3aa-448c-905e-f7823f5b7410");
+
    public ElementiumShieldItem(TierSS toolMaterial, int defaultMaxDamage, boolean isTowerShieldIn, int manaPerDamage, Properties prop) {
       super(toolMaterial, defaultMaxDamage, isTowerShieldIn, manaPerDamage, prop);
    }
 
-   /** See {@link ObsidianShieldItem#getDefaultAttributeModifiers} for why a new multimap is built. */
    @Override
-   public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot slot) {
-      Multimap<Attribute, AttributeModifier> modifiers = HashMultimap.create();
-      Multimap<Attribute, AttributeModifier> inherited = super.getDefaultAttributeModifiers(slot);
-      if (inherited != null && !inherited.isEmpty()) {
-         modifiers.putAll(inherited);
+   public ItemAttributeModifiers getDefaultAttributeModifiers() {
+      ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
+      Holder<Attribute> pixieChance = BotaniaCompat.pixieSpawnChanceHolder();
+      if (pixieChance != null) {
+         builder.add(pixieChance,
+               new AttributeModifier(PIXIE_SPAWN_UUID, "shield_pixie_spawn", 0.1, AttributeModifier.Operation.ADD_VALUE),
+               EquipmentSlotGroup.HAND);
       }
-
-      if (slot == EquipmentSlot.OFFHAND || slot == EquipmentSlot.MAINHAND) {
-         // Pixie spawn chance, obtained through reflection so Botania stays optional.
-         Attribute pixieChance = BotaniaCompat.pixieSpawnChanceAttribute();
-         if (pixieChance != null) {
-            AttributeModifier modifier = BotaniaCompat.pixieModifier(slot, "Shield modifier", 0.1);
-            if (modifier != null) {
-               modifiers.put(pixieChance, modifier);
-            }
-         }
-      }
-
-      return modifiers;
+      return builder.build();
    }
 }

@@ -1,0 +1,66 @@
+plugins {
+    id "com.gradleup.shadow"
+}
+
+architectury {
+    platformSetupLoomIde()
+    neoForge()
+}
+
+configurations {
+    common {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentNeoForge.extendsFrom common
+
+    shadowBundle {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+}
+
+dependencies {
+    neoForge "net.neoforged:neoforge:$rootProject.neo_version"
+    compileOnly "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
+
+    // Architectury API
+    modImplementation "dev.architectury:architectury-neoforge:$rootProject.architectury_api_version"
+
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    shadowBundle project(path: ":common", configuration: "transformProductionNeoForge")
+
+    annotationProcessor "org.spongepowered:mixin:$rootProject.mixin_version:processor"
+    compileOnly "org.spongepowered:mixin:$rootProject.mixin_version"
+    compileOnly "org.jetbrains:annotations:24.1.0"
+
+    // Optional integration: JEI
+    compileOnly "mezz.jei:jei-1.20.6-neoforge-api:$rootProject.jei_version"
+}
+
+processResources {
+    def replaceProperties = [
+        minecraft_version: rootProject.minecraft_version,
+        mod_id: rootProject.mod_id,
+        mod_name: rootProject.mod_name,
+        mod_version: rootProject.mod_version,
+        neo_version: rootProject.neo_version,
+        architectury_api_version: rootProject.architectury_api_version
+    ]
+    inputs.properties replaceProperties
+
+    filesMatching("META-INF/neoforge.mods.toml") {
+        expand replaceProperties
+    }
+}
+
+shadowJar {
+    configurations = [project.configurations.shadowBundle]
+    archiveClassifier = "dev-shadow"
+}
+
+remapJar {
+    inputFile.set shadowJar.archiveFile
+}

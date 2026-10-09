@@ -1,12 +1,11 @@
 architectury {
-    common("forge", "fabric")
+    common("neoforge", "fabric")
 }
 
 dependencies {
     compileOnly "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
 
-
-    // Architectury API (loader-agnostic core of Architectury API 9.x)
+    // Architectury API
     modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
 
     // Mixin: shared mixin classes live in :common
@@ -16,10 +15,8 @@ dependencies {
     // Annotations
     compileOnly "org.jetbrains:annotations:24.1.0"
 
-    // Optional integration: JEI. The Fabric artifact contains the same `mezz.jei.api`
-    // surface, so the no-op plugin class compiles here and never loads when JEI is
-    // absent. Botania needs no dependency at all - see compat/BotaniaCompat.
-    compileOnly "mezz.jei:jei-1.20.1-forge:$rootProject.jei_version"
+    // Optional integration: JEI
+    compileOnly "mezz.jei:jei-1.20.6-common-api:$rootProject.jei_version"
 
     testImplementation "org.junit.jupiter:junit-jupiter:5.10.2"
     testRuntimeOnly "org.junit.platform:junit-platform-launcher"

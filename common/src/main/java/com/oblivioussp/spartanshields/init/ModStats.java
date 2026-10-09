@@ -15,7 +15,7 @@ public class ModStats {
    }
 
    private static void registerStat(ResourceLocation statNameIn, StatFormatter formatterIn) {
-      Registry.register(BuiltInRegistries.CUSTOM_STAT, statNameIn.toString(), statNameIn);
+      Registry.register(BuiltInRegistries.CUSTOM_STAT, statNameIn, statNameIn);
       Stats.CUSTOM.get(statNameIn);
    }
 

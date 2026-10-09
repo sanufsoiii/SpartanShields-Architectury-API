@@ -2,8 +2,10 @@ package com.oblivioussp.spartanshields.client.render.item;
 
 import com.oblivioussp.spartanshields.item.FEPoweredShieldItem;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 
 public class MekanismTowerShieldRenderInfo extends TowerShieldRenderInfo {
    protected final float r;
@@ -29,7 +31,7 @@ public class MekanismTowerShieldRenderInfo extends TowerShieldRenderInfo {
 
    @Override
    public RenderType getLayerRenderType(ItemStack stack) {
-      boolean isPowered = stack.getOrCreateTag().getInt(FEPoweredShieldItem.NBT_ENERGY) != 0;
+      boolean isPowered = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt(FEPoweredShieldItem.NBT_ENERGY) != 0;
       return isPowered ? LIGHTS_ON : LIGHTS_OFF;
    }
 

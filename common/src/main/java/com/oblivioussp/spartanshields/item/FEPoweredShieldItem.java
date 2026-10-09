@@ -5,6 +5,7 @@ import com.oblivioussp.spartanshields.util.PowerUnit;
 import dev.architectury.platform.Platform;
 import dev.architectury.utils.Env;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -12,9 +13,11 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 
 import java.text.NumberFormat;
@@ -38,22 +41,18 @@ public class FEPoweredShieldItem extends ShieldBaseItem implements IDamageShield
       this.preferredEnergyUnit = preferredUnit;
    }
 
-   /**
-    * Forge-only hook in the original release (there is no {@code Item#setDamage} in vanilla), kept
-    * without {@code @Override} so powered shields never accumulate durability on Forge.
-    */
    public void setDamage(ItemStack stack, int damage) {
    }
 
    @Override
    public int getBarWidth(ItemStack stack) {
-      int energy = stack.getOrCreateTag().getInt(NBT_ENERGY);
+      int energy = getFEStored(stack);
       return Math.round(13.0F * (float) energy / (float) this.energyCapacity);
    }
 
    @Override
    public boolean isBarVisible(ItemStack stack) {
-      int energy = stack.getOrCreateTag().getInt(NBT_ENERGY);
+      int energy = getFEStored(stack);
       return energy < this.energyCapacity;
    }
 
@@ -62,28 +61,16 @@ public class FEPoweredShieldItem extends ShieldBaseItem implements IDamageShield
       return BAR_COLOUR;
    }
 
-   /**
-    * Forge-only hook in the original release; kept (without {@code @Override}) so the energy
-    * bar colour survives on Forge.
-    */
    public int getRGBDurabilityForDisplay(ItemStack stack) {
       return BAR_COLOUR;
    }
 
-   /**
-    * Forge-only hook: returns the energy capacity as the "max damage" so the durability bar shows
-    * charge. Vanilla has no equivalent, but {@link #getBarWidth(ItemStack)} drives the bar on both
-    * loaders anyway.
-    */
    public int getMaxDamage(ItemStack stack) {
       return this.energyCapacity;
    }
 
    @Override
-   public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn) {
-      // Porting note: the original used Minecraft.getInstance() + I18n directly inside a
-      // client-only method; the environment check keeps the class loadable on a dedicated
-      // server, where tooltips are never rendered anyway.
+   public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
       NumberFormat formatter = NumberFormat.getIntegerInstance(
               Platform.getEnvironment() == Env.CLIENT ? clientLocale() : Locale.getDefault());
       float scale = this.preferredEnergyUnit.getEnergyScaleToFE();
@@ -98,10 +85,6 @@ public class FEPoweredShieldItem extends ShieldBaseItem implements IDamageShield
       tooltip.add(Component.translatable("tooltip.spartanshields.fe_shield.desc"));
    }
 
-   /**
-    * Porting note: {@code LanguageManager#getJavaLocale()} is a Forge patch that does not exist on
-    * Fabric, so the selected language code is turned into a {@link Locale} directly.
-    */
    private static Locale clientLocale() {
       return Locale.forLanguageTag(net.minecraft.client.Minecraft.getInstance().getLanguageManager().getSelected());
    }
@@ -120,8 +103,6 @@ public class FEPoweredShieldItem extends ShieldBaseItem implements IDamageShield
       }
 
       if (level.isClientSide) {
-         // Component.translatable is loader-agnostic, unlike the I18n.get() call the Forge
-         // release used (which had to be guarded by @OnlyIn).
          player.sendSystemMessage(Component.literal(ChatFormatting.YELLOW.toString())
                .append(Component.translatable("message.spartanshields.powered_shield_block_fail", stack.getHoverName())));
       }
@@ -132,10 +113,11 @@ public class FEPoweredShieldItem extends ShieldBaseItem implements IDamageShield
    @Override
    public void damageShield(ItemStack shieldStack, Player player, Entity attacker, float damage) {
       int energyToUse = Mth.floor(damage);
-      int currentEnergy = shieldStack.getOrCreateTag().getInt(NBT_ENERGY);
+      int currentEnergy = getFEStored(shieldStack);
       int energyRemoved = Math.min(energyToUse, currentEnergy);
       currentEnergy -= energyRemoved;
-      shieldStack.getTag().putInt(NBT_ENERGY, currentEnergy);
+      final int finalEnergy = currentEnergy;
+      CustomData.update(DataComponents.CUSTOM_DATA, shieldStack, tag -> tag.putInt(NBT_ENERGY, finalEnergy));
       if (currentEnergy == 0) {
          Level level = player.level();
          player.playSound(SoundEvents.SHIELD_BREAK, 0.8F, 0.8F + level.random.nextFloat() * 0.4F);
@@ -166,11 +148,11 @@ public class FEPoweredShieldItem extends ShieldBaseItem implements IDamageShield
 
    @Override
    public int receiveFE(ItemStack container, int maxReceive, boolean simulate) {
-      int energy = container.getOrCreateTag().getInt(NBT_ENERGY);
+      int energy = getFEStored(container);
       int energyReceived = Math.min(this.energyCapacity - energy, Math.min(this.maxEnergyReceive, maxReceive));
       if (!simulate) {
-         energy += energyReceived;
-         container.getTag().putInt(NBT_ENERGY, energy);
+         final int finalEnergy = energy + energyReceived;
+         CustomData.update(DataComponents.CUSTOM_DATA, container, tag -> tag.putInt(NBT_ENERGY, finalEnergy));
       }
 
       return energyReceived;
@@ -183,7 +165,8 @@ public class FEPoweredShieldItem extends ShieldBaseItem implements IDamageShield
 
    @Override
    public int getFEStored(ItemStack container) {
-      return !container.getOrCreateTag().contains(NBT_ENERGY) ? 0 : container.getTag().getInt(NBT_ENERGY);
+      CustomData customData = container.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+      return customData.contains(NBT_ENERGY) ? customData.copyTag().getInt(NBT_ENERGY) : 0;
    }
 
    @Override

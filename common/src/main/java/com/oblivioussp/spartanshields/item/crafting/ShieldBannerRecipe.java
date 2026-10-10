@@ -39,7 +39,7 @@ public class ShieldBannerRecipe extends CustomRecipe {
       for (int i = 0; i < inv.size(); i++) {
          ItemStack stack = inv.getItem(i);
          if (!stack.isEmpty()) {
-            if (stack.is(ItemTags.BANNERS)) {
+            if (stack.getItem() instanceof BannerItem) {
                if (!banner.isEmpty()) {
                   return false;
                }
@@ -50,7 +50,7 @@ public class ShieldBannerRecipe extends CustomRecipe {
                }
 
                BannerPatternLayers bannerPatterns = stack.getOrDefault(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY);
-               if (!bannerPatterns.layers().isEmpty()) {
+               if (!bannerPatterns.layers().isEmpty() || stack.get(DataComponents.BASE_COLOR) != null) {
                   return false;
                }
 
@@ -70,7 +70,7 @@ public class ShieldBannerRecipe extends CustomRecipe {
       for (int i = 0; i < inv.size(); i++) {
          ItemStack stack = inv.getItem(i);
          if (!stack.isEmpty()) {
-            if (stack.is(ItemTags.BANNERS)) {
+            if (stack.getItem() instanceof BannerItem) {
                banner = stack;
             } else if (stack.getItem() == this.shieldItem) {
                shield = stack.copy();
@@ -78,11 +78,14 @@ public class ShieldBannerRecipe extends CustomRecipe {
          }
       }
 
-      if (shield.isEmpty()) {
-         return shield;
+      if (shield.isEmpty() || banner.isEmpty()) {
+         return ItemStack.EMPTY;
       }
 
-      shield.set(DataComponents.BANNER_PATTERNS, banner.get(DataComponents.BANNER_PATTERNS));
+      BannerPatternLayers bannerPatterns = banner.get(DataComponents.BANNER_PATTERNS);
+      if (bannerPatterns != null) {
+         shield.set(DataComponents.BANNER_PATTERNS, bannerPatterns);
+      }
       shield.set(DataComponents.BASE_COLOR, ((BannerItem) banner.getItem()).getColor());
       return shield;
    }

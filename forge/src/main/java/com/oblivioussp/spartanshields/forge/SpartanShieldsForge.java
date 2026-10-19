@@ -77,7 +77,7 @@ public class SpartanShieldsForge {
    }
 
    /**
-    * Porting note: item colours, model layers and key bindings have to come from Forge's own client
+    * Note: item colours, model layers and key bindings have to come from Forge's own client
     * events. Architectury's Forge implementations of the matching registries only forward to those
     * events, and all three fire before {@link FMLClientSetupEvent} - calling them from client setup
     * is either a no-op or, for key mappings, an outright

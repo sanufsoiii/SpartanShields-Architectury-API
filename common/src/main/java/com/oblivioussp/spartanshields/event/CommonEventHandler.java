@@ -15,7 +15,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import java.util.Map;
 
 /**
- * Porting note: this replaces the Forge {@code LivingAttackEvent} subscriber. Architectury's
+ * Note: this replaces the Forge {@code LivingAttackEvent} subscriber. Architectury's
  * {@link EntityEvent#LIVING_HURT} is bridged from {@code LivingAttackEvent} on Forge, so the
  * trigger point and {@code getAmount()} semantics are unchanged.
  */

@@ -5,7 +5,7 @@ import dev.architectury.networking.NetworkManager;
 import dev.architectury.networking.simple.SimpleNetworkManager;
 
 /**
- * Porting note: the Forge release used {@code NetworkRegistry.newSimpleChannel} with a hand-rolled
+ * Note: the Forge release used {@code NetworkRegistry.newSimpleChannel} with a hand-rolled
  * packet id counter and sent packets through {@code player.connection.connection}. Architectury's
  * {@link SimpleNetworkManager} replaces all of that: packet types are registered by name on a
  * channel identified by the mod id, and the platform handles the plumbing (including the

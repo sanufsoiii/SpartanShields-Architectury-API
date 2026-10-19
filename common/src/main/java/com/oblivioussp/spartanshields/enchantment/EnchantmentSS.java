@@ -10,7 +10,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public abstract class EnchantmentSS extends Enchantment {
    /**
-    * Porting note: the Forge release built a custom
+    * Note: the Forge release built a custom
     * {@code EnchantmentCategory.create("ss_shield", item -> item instanceof ShieldBaseItem)}.
     * Vanilla 1.20.1 has no such factory, so shields' own {@code breakable} category is used and
     * {@link #canEnchant(ItemStack)} narrows it down to Spartan Shields - which covers every shield

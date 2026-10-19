@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * Client-only registrations.
  * <p>
- * Porting note: the Forge release registered everything from Forge client events
+ * Note: the Forge release registered everything from Forge client events
  * ({@code RegisterColorHandlersEvent.Item}, {@code EntityRenderersEvent.RegisterLayerDefinitions},
  * {@code RegisterClientReloadListenersEvent}, {@code RegisterKeyMappingsEvent}, {@code ItemProperties}).
  * Only some of those have an Architectury equivalent that is safe to call late: item colours, model
@@ -66,7 +66,7 @@ public class ClientHelper {
     * {@code forge/SpartanShieldsForge.ClientModEvents}) because Architectury's Forge implementations
     * of all three only forward to events that have already been fired by the time client setup runs.
     * <p>
-    * Porting note: the Forge release also registered a {@code RegisterClientReloadListenersEvent}
+    * Note: the Forge release also registered a {@code RegisterClientReloadListenersEvent}
     * listener to re-bake the tower shield models. Architectury's Forge implementation of
     * {@code ReloadListenerRegistry} only adds the listener while that event is firing (i.e. never, from
     * client setup) and on Fabric its {@code PackType.CLIENT_RESOURCES} overload stalls the resource

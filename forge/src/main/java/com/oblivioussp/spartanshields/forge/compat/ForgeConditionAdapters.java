@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 /**
  * Teaches Forge's own {@code CraftingHelper} about this mod's condition types.
  * <p>
- * Porting note: the shipped data pack uses {@code spartanshields:*} conditions instead of Forge's
+ * Note: the shipped data pack uses {@code spartanshields:*} conditions instead of Forge's
  * {@code forge:not} / {@code forge:tag_empty} / {@code forge:mod_loaded}, because Fabric cannot parse
  * Forge's conditions at all. Forge drops any recipe whose conditions it cannot resolve, so every
  * condition is additionally wrapped in a thin {@link ICondition} adapter here. The evaluation itself

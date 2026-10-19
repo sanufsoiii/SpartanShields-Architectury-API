@@ -16,7 +16,7 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.Identifier;
 
 /**
- * Porting note: the Forge release declared {@code ModelLayerLocation} constants and registered
+ * Note: the Forge release declared {@code ModelLayerLocation} constants and registered
  * {@code LayerDefinition} factories through {@code EntityRenderersEvent.RegisterLayerDefinitions}.
  * Architectury's {@link EntityModelLayerRegistry} takes the same two ingredients, so the
  * registration is unchanged apart from the API.

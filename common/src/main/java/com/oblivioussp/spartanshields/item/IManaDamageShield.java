@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
  * Implemented by shields that do not consume durability but pay with an external resource
  * (Botania mana).
  * <p>
- * Porting note: the Forge release hooked this through Forge-only
+ * Note: the Forge release hooked this through Forge-only
  * {@code Item#damageItem(ItemStack, int, LivingEntity, Consumer)}, which vanilla/Fabric never
  * calls. The behaviour is now reached through a loader-agnostic mixin on
  * {@code ItemStack#hurtAndBreak} (see {@code mixin.MixinItemStack}), so it behaves identically

@@ -20,7 +20,7 @@ import java.util.function.Supplier;
 /**
  * Botania integration without a compile-time dependency.
  * <p>
- * Porting note: the Forge release declared Botania classes directly
+ * Note: the Forge release declared Botania classes directly
  * ({@code BotaniaAPI}, {@code ManaItemHandler}, {@code ToolCommons}, {@code PixieHandler}) and had
  * no Fabric-compatible artifact to point at, which made the Botania shields impossible to port
  * as-is. Botania ships different artifacts per loader, so the calls are resolved reflectively

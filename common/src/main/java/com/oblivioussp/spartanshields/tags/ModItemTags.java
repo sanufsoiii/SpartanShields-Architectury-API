@@ -12,13 +12,13 @@ public class ModItemTags {
 
    // Repair / crafting material tags.
    //
-   // Porting note: the Forge release pointed these at Forge's common tags
+   // Note: the Forge release pointed these at Forge's common tags
    // (`forge:ingots/tin`, `forge:gems/diamond`, ...). Forge's tag layer does not exist on
    // Fabric, and Forge's `forge:not + forge:tag_empty` recipe conditions cannot be parsed by
    // vanilla either, so every material tag now lives in this mod's own namespace and is
    // pre-populated with the item ids of the known provider mods. Entries pointing at
    // uninstalled mods are silently dropped by the tag loader, so this stays forward
-   // compatible. See tools/migrate_data.py and PORTING.md.
+   // compatible.
    public static final TagKey<Item> TIN_INGOT = tag("ingots/tin");
    public static final TagKey<Item> BRONZE_INGOT = tag("ingots/bronze");
    public static final TagKey<Item> STEEL_INGOT = tag("ingots/steel");

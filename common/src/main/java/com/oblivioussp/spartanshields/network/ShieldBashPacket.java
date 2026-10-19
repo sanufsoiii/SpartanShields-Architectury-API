@@ -27,7 +27,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 /**
  * Client -> server: the player performed a shield bash.
  * <p>
- * Porting note: Forge's {@code ToolActions.SHIELD_BLOCK} check (a Forge item capability that tells
+ * Note: Forge's {@code ToolActions.SHIELD_BLOCK} check (a Forge item capability that tells
  * the game an item can raise a shield) has no Fabric equivalent. Vanilla already routes blocking
  * through {@code ShieldItem}, and every item in the {@code shields_with_bash} tag is one of ours, so
  * the check is now {@code item instanceof ShieldItem}, which is what vanilla's blocking code
@@ -35,7 +35,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
  */
 public class ShieldBashPacket implements CustomPacketPayload {
    /**
-    * Porting note: the Forge release used {@code player.getEntityReach()}, a Forge
+    * Note: the Forge release used {@code player.getEntityReach()}, a Forge
     * {@code IForgePlayer} extension. Vanilla 1.20.1 has no reach attribute (it arrived in 1.20.2),
     * so the tower shield sweep radius falls back to Forge's default block reach.
     */
@@ -84,7 +84,7 @@ public class ShieldBashPacket implements CustomPacketPayload {
    }
 
    /**
-    * Porting note: {@code ItemStack#getEnchantmentLevel} is a Forge extension
+    * Note: {@code ItemStack#getEnchantmentLevel} is a Forge extension
     * ({@code IForgeItemStack}) and 1.20.1's EnchantmentHelper has no ItemStack overload, so the
     * level comes from the stack's enchantment map.
     */

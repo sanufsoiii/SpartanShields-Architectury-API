@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * Drops recipes whose {@code conditions} array fails, using this mod's own condition types.
  * <p>
- * Porting note: Forge processed recipe conditions inside {@code CraftingHelper}, which is
+ * Note: Forge processed recipe conditions inside {@code CraftingHelper}, which is
  * reachable from Forge's patched recipe serializers only - Fabric has no equivalent, so vanilla
  * simply ignores an unknown {@code conditions} block (and every recipe would stay craftable). This
  * mixin runs at the single point both loaders share, {@code RecipeManager#apply}, i.e. while the

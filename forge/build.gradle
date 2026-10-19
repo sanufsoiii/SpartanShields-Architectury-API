@@ -46,17 +46,15 @@ dependencies {
     compileOnly "mezz.jei:jei-1.20.1-forge:$rootProject.jei_version"
 
     // Dev-only integration test mods, loaded into the Forge dev run only - they are not referenced
-    // by the production jar and end up in no published artifact.
-    //
-    // They are plain file dependencies on purpose: Modrinth's maven serves a version's *primary*
-    // file, which for these mods is the Fabric jar, and modern Fabric jars carry a
-    // `Fabric-Loom-Version` manifest entry that Architectury Loom 1.7 (the last line supporting the
-    // Forge platform) refuses to load ("Mod was built with a newer version of Loom"). The Forge
-    // jars in tools/devmods have no such marker. Refresh them with tools/fetch_devmods.py.
-    modLocalRuntime files(
-            rootProject.file("tools/devmods/mezz_config-1.20.1-forge-0.6.7.jar"),
-            rootProject.file("tools/devmods/jei-1.20.1-forge-15.62.0.217.jar"),
-            rootProject.file("tools/devmods/holdmyitems-1.20.1-4v2.0.jar"))
+    // by the production jar and end up in no published artifact. They are optional local files:
+    // drop the Forge builds into tools/devmods before starting a dev run that integrates with
+    // them. Modrinth's maven cannot be used here: it serves these mods' Fabric files, and the
+    // Fabric jars carry a `Fabric-Loom-Version` manifest entry that Architectury Loom 1.7 (the
+    // last line supporting the Forge platform) refuses to load.
+    modLocalRuntime files(rootProject.fileTree(dir: "tools/devmods", include: [
+            "mezz_config-1.20.1-forge-0.6.7.jar",
+            "jei-1.20.1-forge-15.62.0.217.jar",
+            "holdmyitems-1.20.1-4v2.0.jar"]))
 }
 
 processResources {

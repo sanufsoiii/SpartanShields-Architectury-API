@@ -28,7 +28,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 /**
- * Porting note: the Forge release hooked {@code InputEvent.MouseButton} / {@code InputEvent.Key}
+ * Note: the Forge release hooked {@code InputEvent.MouseButton} / {@code InputEvent.Key}
  * plus {@code ItemTooltipEvent}. The equivalents are Architectury's {@link ClientRawInputEvent}
  * (mouse clicks and key presses) and {@link ClientTooltipEvent#ITEM}.
  */
@@ -36,7 +36,7 @@ public class ClientEventHandler {
    public static void register() {
       // MouseClicked: (Minecraft, button, action, modifiers)
       //
-      // Porting note: the *post* event is required. The Forge release subscribed to
+      // Note: the *post* event is required. The Forge release subscribed to
       // InputEvent.MouseButton, which Forge fires at the end of MouseHandler#onPress - i.e. after
       // vanilla has already bumped the attack key's click counter, which is what
       // keyAttack.consumeClick() reads. MOUSE_CLICKED_PRE fires before that, so consumeClick()

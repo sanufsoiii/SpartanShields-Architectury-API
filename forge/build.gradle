@@ -23,7 +23,7 @@ configurations {
 }
 
 dependencies {
-    // Porting note: Architectury API has no NeoForge build for MC 1.20.1, so the primary target is
+    // Note: Architectury API has no NeoForge build for MC 1.20.1, so the primary target is
     // Forge 1.20.1 (47.4.x). Architectury Loom selects the platform through the `loom.platform`
     // property (see forge/gradle.properties) and then reads the Forge userdev artifact from the
     // `forge` configuration it creates itself (`modImplementation` would only put a plain mod jar on

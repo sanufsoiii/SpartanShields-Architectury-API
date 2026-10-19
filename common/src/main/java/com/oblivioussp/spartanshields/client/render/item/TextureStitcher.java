@@ -5,7 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 /**
  * Texture bindings for the tower shields.
  *
- * Porting note: the Forge release loaded these through its own `TextureStitcher` plus the
+ * Note: the Forge release loaded these through its own `TextureStitcher` plus the
  * `assets/minecraft/atlases/shield_patterns.json` atlas. The atlas entry is not needed any
  * more: the shield textures already live in `assets/spartanshields/textures/entity/**`, and
  * Minecraft's built-in `shields` texture sheet picks them up because the renderer asks for

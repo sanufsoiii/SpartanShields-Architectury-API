@@ -2,7 +2,7 @@ plugins {
     // Architectury Loom 1.7 is the last line that still provides the *Forge* platform
     // configuration (`forge "net.minecraftforge:forge:..."`). Newer Loom releases folded Forge
     // into NeoForge, which is incompatible with the MC 1.20.1 Architectury API line (9.x) that
-    // only publishes `architectury-forge`. See PORTING.md.
+    // only publishes `architectury-forge`.
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.7-SNAPSHOT" apply false
     id "com.gradleup.shadow" version "8.3.6" apply false

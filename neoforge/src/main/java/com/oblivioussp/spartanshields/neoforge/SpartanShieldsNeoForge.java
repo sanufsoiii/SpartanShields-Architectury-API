@@ -47,7 +47,7 @@ import net.neoforged.neoforge.energy.EnergyStorage;
  * class only wires the Architectury registries into NeoForge's lifecycle, bridges the FE charge of
  * the powered shields into NeoForge's per-item energy capability and forwards the client-side
  * registrations. Recipe conditions are handled by {@code mixin.MixinRecipeManager} (NeoForge does
- * not parse foreign {@code conditions} blocks) - see PORTING.md.
+ * not parse foreign {@code conditions} blocks)
  */
 @Mod(SpartanShields.ID)
 public class SpartanShieldsNeoForge {
@@ -62,7 +62,7 @@ public class SpartanShieldsNeoForge {
 
       CommonEventHandler.register();
 
-      // See the porting notes: NeoForge freezes vanilla registries before mod CONSTRUCT, so the
+      //  NeoForge freezes vanilla registries before mod CONSTRUCT, so the
       // custom stat goes through RegisterEvent and network init happens at construct (architectury
       // defers payload registration itself, same as the Fabric entrypoint); only applyDurabilities()
       // (which resolves registered items) and the eager Stat instance stay in the setup queue.

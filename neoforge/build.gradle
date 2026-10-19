@@ -23,7 +23,7 @@ configurations {
 }
 
 dependencies {
-    // Porting note: NeoForge is the fork-era loader for MC 1.20.4 (20.4.x); Architectury Loom reads
+    // Note: NeoForge is the fork-era loader for MC 1.20.4 (20.4.x); Architectury Loom reads
     // the NeoForge userdev artifact from the `neoForge` configuration it creates itself (the same
     // mechanism the :forge module uses with the `forge` configuration). The platform is selected
     // through the `loom.platform` property (see neoforge/gradle.properties).

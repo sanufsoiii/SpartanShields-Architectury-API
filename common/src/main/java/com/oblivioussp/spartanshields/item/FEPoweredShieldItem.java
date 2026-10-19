@@ -81,7 +81,7 @@ public class FEPoweredShieldItem extends ShieldBaseItem implements IDamageShield
 
    @Override
    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn) {
-      // Porting note: the original used Minecraft.getInstance() + I18n directly inside a
+      // Note: the original used Minecraft.getInstance() + I18n directly inside a
       // client-only method; the environment check keeps the class loadable on a dedicated
       // server, where tooltips are never rendered anyway.
       NumberFormat formatter = NumberFormat.getIntegerInstance(
@@ -99,7 +99,7 @@ public class FEPoweredShieldItem extends ShieldBaseItem implements IDamageShield
    }
 
    /**
-    * Porting note: {@code LanguageManager#getJavaLocale()} is a Forge patch that does not exist on
+    * Note: {@code LanguageManager#getJavaLocale()} is a Forge patch that does not exist on
     * Fabric, so the selected language code is turned into a {@link Locale} directly.
     */
    private static Locale clientLocale() {

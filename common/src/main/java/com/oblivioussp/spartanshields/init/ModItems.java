@@ -109,33 +109,33 @@ public class ModItems {
    public static final RegistrySupplier<ShieldBaseItem> MANASTEEL_BASIC_SHIELD = REGISTER.register(
          "manasteel_basic_shield",
          () -> BotaniaCompat.isLoaded()
-               ? new BotaniaShieldItem(manasteelTier(), 450, false, 60, new Properties())
-               : new ExternalModShieldItem(TierSS.MANASTEEL, 450, false, "botania", new Properties()));
+               ? new BotaniaShieldItem(manasteelTier(), 450, false, 60, prop("manasteel_basic_shield"))
+               : new ExternalModShieldItem(TierSS.MANASTEEL, 450, false, "botania", prop("manasteel_basic_shield")));
    public static final RegistrySupplier<ShieldBaseItem> MANASTEEL_TOWER_SHIELD = REGISTER.register(
          "manasteel_tower_shield",
          () -> BotaniaCompat.isLoaded()
-               ? new BotaniaShieldItem(manasteelTier(), 450, true, 60, new Properties())
-               : new ExternalModShieldItem(TierSS.MANASTEEL, 450, true, "botania", new Properties()));
+               ? new BotaniaShieldItem(manasteelTier(), 450, true, 60, prop("manasteel_tower_shield"))
+               : new ExternalModShieldItem(TierSS.MANASTEEL, 450, true, "botania", prop("manasteel_tower_shield")));
    public static final RegistrySupplier<ShieldBaseItem> TERRASTEEL_BASIC_SHIELD = REGISTER.register(
          "terrasteel_basic_shield",
          () -> BotaniaCompat.isLoaded()
-               ? new BotaniaShieldItem(terrasteelTier(), 2920, false, 100, new Properties())
-               : new ExternalModShieldItem(TierSS.TERRASTEEL, 2920, false, "botania", new Properties()));
+               ? new BotaniaShieldItem(terrasteelTier(), 2920, false, 100, prop("terrasteel_basic_shield"))
+               : new ExternalModShieldItem(TierSS.TERRASTEEL, 2920, false, "botania", prop("terrasteel_basic_shield")));
    public static final RegistrySupplier<ShieldBaseItem> TERRASTEEL_TOWER_SHIELD = REGISTER.register(
          "terrasteel_tower_shield",
          () -> BotaniaCompat.isLoaded()
-               ? new BotaniaShieldItem(terrasteelTier(), 2920, true, 100, new Properties())
-               : new ExternalModShieldItem(TierSS.TERRASTEEL, 2920, true, "botania", new Properties()));
+               ? new BotaniaShieldItem(terrasteelTier(), 2920, true, 100, prop("terrasteel_tower_shield"))
+               : new ExternalModShieldItem(TierSS.TERRASTEEL, 2920, true, "botania", prop("terrasteel_tower_shield")));
    public static final RegistrySupplier<ShieldBaseItem> ELEMENTIUM_BASIC_SHIELD = REGISTER.register(
          "elementium_basic_shield",
          () -> BotaniaCompat.isLoaded()
-               ? new ElementiumShieldItem(elementiumTier(), 1080, false, 60, new Properties())
-               : new ExternalModShieldItem(TierSS.ELEMENTIUM, 1080, false, "botania", new Properties()));
+               ? new ElementiumShieldItem(elementiumTier(), 1080, false, 60, prop("elementium_basic_shield"))
+               : new ExternalModShieldItem(TierSS.ELEMENTIUM, 1080, false, "botania", prop("elementium_basic_shield")));
    public static final RegistrySupplier<ShieldBaseItem> ELEMENTIUM_TOWER_SHIELD = REGISTER.register(
          "elementium_tower_shield",
          () -> BotaniaCompat.isLoaded()
-               ? new ElementiumShieldItem(elementiumTier(), 1080, true, 60, new Properties())
-               : new ExternalModShieldItem(TierSS.ELEMENTIUM, 1080, true, "botania", new Properties()));
+               ? new ElementiumShieldItem(elementiumTier(), 1080, true, 60, prop("elementium_tower_shield"))
+               : new ExternalModShieldItem(TierSS.ELEMENTIUM, 1080, true, "botania", prop("elementium_tower_shield")));
 
    public static final RegistrySupplier<ShieldBaseItem> ALUMINUM_BASIC_SHIELD =
          REGISTER.register("aluminum_basic_shield", () -> new BasicShieldItem(TierSS.ALUMINUM, 720, prop("aluminum_basic_shield")));

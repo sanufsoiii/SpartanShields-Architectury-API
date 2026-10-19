@@ -5,7 +5,7 @@ import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
 import net.minecraft.client.KeyMapping;
 
 /**
- * Porting note: replaces Forge's {@code RegisterKeyMappingsEvent} with Architectury's
+ * Note: replaces Forge's {@code RegisterKeyMappingsEvent} with Architectury's
  * {@link KeyMappingRegistry}, which registers on both loaders.
  */
 public class ModKeyBinds {

@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 /**
  * A recipe condition understood by this mod on every loader.
  * <p>
- * Porting note: the Forge release implemented Forge's {@code ICondition}, which Fabric cannot
+ * Note: the Forge release implemented Forge's {@code ICondition}, which Fabric cannot
  * parse at all. These conditions are evaluated by {@code mixin.MixinRecipeManager} while the data
  * pack is being loaded (identical behaviour on both loaders) and, on Forge, are additionally
  * wrapped as real {@code ICondition}s by {@code forge/compat/ForgeConditionAdapters} so Forge's

@@ -18,3 +18,4 @@ rootProject.name = "spartanshields"
 include("common")
 include("fabric")
 include("forge")
+include("neoforge")

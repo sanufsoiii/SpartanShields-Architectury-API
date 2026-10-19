@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Mod configuration.
  * <p>
- * Porting note: the Forge release used {@code ForgeConfigSpec}, which only exists on Forge and
+ * Note: the Forge release used {@code ForgeConfigSpec}, which only exists on Forge and
  * could not be reused for Fabric (Architectury API 9.x has no cross-loader config API - it only
  * appeared in Architectury 13.x for MC 1.21). The option set, keys, defaults and ranges are kept
  * 1:1, but the storage is a single JSON document in the loader-agnostic config directory
@@ -154,7 +154,7 @@ public class Config {
       return this.data.getAsJsonObject(name);
    }
 
-   // Porting note: Architectury's Value types extend both Supplier and Consumer, so they are
+   // Note: Architectury's Value types extend both Supplier and Consumer, so they are
    // interfaces with two abstract methods and cannot be written as lambdas - anonymous classes it is.
    private BooleanValue bool(String category, String key, boolean defaultValue) {
       JsonObject object = category(category);

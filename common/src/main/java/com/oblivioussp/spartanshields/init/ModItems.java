@@ -18,7 +18,7 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.Properties;
@@ -197,7 +197,7 @@ public class ModItems {
    }
 
    private static Properties prop(String name) {
-      return new Properties().setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(SpartanShields.ID, name)));
+      return new Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(SpartanShields.ID, name)));
    }
 
    public static void register() {

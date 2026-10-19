@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 /**
  * Hands the tower shields to their custom {@link BlockEntityWithoutLevelRenderer}.
  * <p>
- * Porting note: this is what {@code fabric-rendering-v1} does for
+ * Note: this is what {@code fabric-rendering-v1} does for
  * {@code Item#getCustomRenderer}, and what Forge does through
  * {@code IClientItemExtensions#getCustomRenderer}. Architectury 9.x exposes neither, and
  * fabric-rendering-v1 is not a dependency of a Forge-targeting Architectury project, so the hook is

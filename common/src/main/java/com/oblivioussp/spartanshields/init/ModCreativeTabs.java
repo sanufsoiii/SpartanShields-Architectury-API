@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 
 public class ModCreativeTabs {
    /**
-    * Porting note: the tab has to go through a deferred register. Architectury's
+    * Note: the tab has to go through a deferred register. Architectury's
     * {@code CreativeTabRegistry.create(Consumer<CreativeModeTab.Builder>)} looks like the natural
     * replacement for Forge's {@code DeferredRegister<CreativeModeTab>}, but on Forge it ends up in a
     * direct {@code Registry.register(...)} call, and doing that from the mod constructor happens
@@ -26,7 +26,7 @@ public class ModCreativeTabs {
    public static final DeferredRegister<CreativeModeTab> REGISTER =
          DeferredRegister.create(SpartanShields.ID, Registries.CREATIVE_MODE_TAB);
 
-   // Porting note: vanilla 1.20.1 only has CreativeModeTab#builder(Row, int) - the no-arg overload is
+   // Note: vanilla 1.20.1 only has CreativeModeTab#builder(Row, int) - the no-arg overload is
    // a Forge addition - so the tab is built with the row/column form, which exists on both loaders.
    public static final RegistrySupplier<CreativeModeTab> TAB = REGISTER.register("tab", () ->
          CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)

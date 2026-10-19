@@ -34,7 +34,7 @@ import net.minecraft.world.level.block.entity.BannerPatternLayers;
 /**
  * Custom renderer for every tower shield.
  * <p>
- * Porting note: the Forge release registered this as an {@code IClientItemExtensions} renderer and
+ * Note: the Forge release registered this as an {@code IClientItemExtensions} renderer and
  * refreshed its models through {@code RegisterClientReloadListenersEvent}. Architectury 9.x has no
  * cross-loader item-renderer registry, so the renderer is invoked from
  * {@code mixin.MixinItemRenderer} and the models are (re)baked lazily through the vanilla

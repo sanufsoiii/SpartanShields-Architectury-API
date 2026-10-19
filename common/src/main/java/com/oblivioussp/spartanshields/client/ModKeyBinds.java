@@ -7,7 +7,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * Porting note: replaces Forge's {@code RegisterKeyMappingsEvent} with Architectury's
+ * Note: replaces Forge's {@code RegisterKeyMappingsEvent} with Architectury's
  * {@link KeyMappingRegistry}, which registers on both loaders.
  */
 public class ModKeyBinds {

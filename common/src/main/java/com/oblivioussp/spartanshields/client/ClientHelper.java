@@ -7,7 +7,7 @@ import com.oblivioussp.spartanshields.util.Log;
 /**
  * Client-only registrations.
  * <p>
- * Porting note: the Forge release registered everything from Forge client events
+ * Note: the Forge release registered everything from Forge client events
  * ({@code RegisterColorHandlersEvent.Item}, {@code EntityRenderersEvent.RegisterLayerDefinitions},
  * {@code RegisterClientReloadListenersEvent}, {@code RegisterKeyMappingsEvent}, {@code ItemProperties}).
  * Only some of those have an Architectury equivalent that is safe to call late: item colours, model

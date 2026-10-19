@@ -21,7 +21,7 @@ public class ObsidianShieldItem extends BasicShieldItem {
    }
 
    /**
-    * Porting note: the Forge release overrode Forge-only
+    * Note: the Forge release overrode Forge-only
     * {@code Item#getAttributeModifiers(EquipmentSlot, ItemStack)}. Vanilla only offers
     * {@link #getDefaultAttributeModifiers(EquipmentSlot)}, which is what is overridden here, so the
     * movement-speed penalty and knockback resistance now also apply on Fabric.

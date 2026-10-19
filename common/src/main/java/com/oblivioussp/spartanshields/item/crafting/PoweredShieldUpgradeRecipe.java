@@ -23,7 +23,7 @@ import net.minecraft.world.level.Level;
 /**
  * Wraps a shaped recipe and moves the stored energy of the ingredients into the result.
  * <p>
- * Porting note: the Forge release summed {@code ForgeCapabilities.ENERGY} over the crafting grid
+ * Note: the Forge release summed {@code ForgeCapabilities.ENERGY} over the crafting grid
  * through {@code LazyOptional}. Energy is now read through this mod's own
  * {@link IItemPoweredFE} interface, which the Forge-side capability provider also implements, so
  * the transfer works identically on both loaders (and keeps working with foreign energy items
@@ -103,7 +103,7 @@ public class PoweredShieldUpgradeRecipe implements CraftingRecipe {
    }
 
    /*
-    * Porting note: the Forge release delegated getRecipeWidth()/getRecipeHeight(), which are Forge
+    * Note: the Forge release delegated getRecipeWidth()/getRecipeHeight(), which are Forge
     * additions to ShapedRecipe; vanilla exposes getWidth()/getHeight() instead. The recipe book
     * reads the dimensions from the wrapped recipe, so no delegation is needed.
     */

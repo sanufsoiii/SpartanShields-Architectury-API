@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 /**
  * Applies an item model's {@code display} transforms before handing the item to a custom renderer.
  * <p>
- * Porting note: the tower shields use {@code "parent": "builtin/entity"} with
+ * Note: the tower shields use {@code "parent": "builtin/entity"} with
  * {@code "gui": {"scale": 0.65}} in their model json, so the whole size in the inventory comes from
  * those transforms - {@code ItemRenderer} applies them and then does
  * {@code translate(-0.5, -0.5, -0.5)} <em>before</em> delegating to a

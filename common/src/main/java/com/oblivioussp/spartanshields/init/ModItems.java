@@ -101,7 +101,7 @@ public class ModItems {
 
    // Botania shields.
    //
-   // Porting note: the Forge release evaluated `ModList.isLoaded("botania")` and picked between a
+   // Note: the Forge release evaluated `ModList.isLoaded("botania")` and picked between a
    // Botania item and an `ExternalModShieldItem` while the class was initialised. Everything is
    // now resolved inside the registration supplier, which Architectury runs at registry time, so
    // the lookup happens after all mods have initialised on both loaders.

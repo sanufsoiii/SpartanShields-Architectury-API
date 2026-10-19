@@ -26,7 +26,7 @@ import net.minecraft.world.level.Level;
 /**
  * Applies a banner to a Spartan Shield.
  * <p>
- * Porting note: {@code ForgeRegistries.ITEMS} was replaced by the vanilla {@link BuiltInRegistries},
+ * Note: {@code ForgeRegistries.ITEMS} was replaced by the vanilla {@link BuiltInRegistries},
  * which behaves identically on Fabric.
  */
 public class ShieldBannerRecipe extends ShieldDecorationRecipe {
@@ -100,7 +100,7 @@ public class ShieldBannerRecipe extends ShieldDecorationRecipe {
    }
 
    /*
-    * Porting note: the Forge release overrode getRemainingItems() through Forge's
+    * Note: the Forge release overrode getRemainingItems() through Forge's
     * Item#getCraftingRemainingItem(ItemStack)/hasCraftingRemainingItem(ItemStack) pair. Those
     * overloads do not exist in vanilla (where ItemStack#getCraftingRemainingItem() is used instead)
     * and shields have no crafting remaining item, so Recipe's default implementation is equivalent.

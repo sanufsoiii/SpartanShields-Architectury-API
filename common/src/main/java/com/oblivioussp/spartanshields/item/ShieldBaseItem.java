@@ -43,7 +43,7 @@ public class ShieldBaseItem extends ShieldItem {
    /**
     * Configured durability.
     * <p>
-    * Porting note: the Forge release overrode {@code Item#getMaxDamage(ItemStack)}, a Forge-only
+    * Note: the Forge release overrode {@code Item#getMaxDamage(ItemStack)}, a Forge-only
     * hook that vanilla/Fabric never call, and {@code Item#getMaxDamage()} is {@code final} in
     * vanilla. The value is therefore published through {@link #getConfiguredMaxDamage()} and
     * applied by {@code mixin.MixinItemStack#getMaxDamage}, which both loaders share.
@@ -77,7 +77,7 @@ public class ShieldBaseItem extends ShieldItem {
    }
 
    /**
-    * Porting note: {@code ItemStack#getEnchantmentLevel} is a Forge extension
+    * Note: {@code ItemStack#getEnchantmentLevel} is a Forge extension
     * ({@code IForgeItemStack}) and 1.20.1's {@code EnchantmentHelper} only offers the entity and raw
     * nbt overloads, so the level is read from the stack's enchantment map.
     */

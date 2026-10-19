@@ -42,7 +42,7 @@ import net.neoforged.neoforge.registries.RegisterEvent;
  * class only wires the Architectury registries into NeoForge's lifecycle and forwards the
  * client-side registrations. Recipe conditions are handled by {@code mixin.MixinRecipeManager}
  * (NeoForge does not parse foreign {@code conditions} blocks), and the FE charge lives in the
- * stack NBT behind {@code IItemPoweredFE} - see PORTING.md for both details.
+ * stack NBT behind {@code IItemPoweredFE}.
  */
 @Mod(SpartanShields.ID)
 public class SpartanShieldsNeoForge {
@@ -57,7 +57,7 @@ public class SpartanShieldsNeoForge {
 
       CommonEventHandler.register();
 
-      // See the porting notes: NeoForge freezes vanilla registries before mod CONSTRUCT (FML
+      //  NeoForge freezes vanilla registries before mod CONSTRUCT (FML
       // 1.0.16/2.0.17, unlike Forge where enqueueWork still ran pre-freeze), so the custom stat
       // goes through RegisterEvent and network init happens at construct (architectury defers
       // payload registration itself, same as the Fabric entrypoint).

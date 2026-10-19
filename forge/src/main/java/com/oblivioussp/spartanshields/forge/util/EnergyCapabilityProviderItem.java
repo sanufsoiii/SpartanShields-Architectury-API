@@ -13,7 +13,7 @@ import net.minecraftforge.energy.IEnergyStorage;
  * Forge bridge that exposes a powered shield's energy through the Forge capability API, so
  * Mekanism/EnderIO energy pipes keep charging the shields exactly as they did in the Forge release.
  * <p>
- * Porting note: this is the only place in the project that still touches Forge's energy API.
+ * Note: this is the only place in the project that still touches Forge's energy API.
  * On Fabric there is no equivalent capability layer in 1.20.1, so shields keep their charge in NBT
  * and expose it through {@link IItemPoweredFE}.
  */

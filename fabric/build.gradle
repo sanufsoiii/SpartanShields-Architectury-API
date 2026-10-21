@@ -27,7 +27,7 @@ dependencies {
     modLocalRuntime "mezz.jei:jei-1.21.5-fabric:21.4.0.27"
     modLocalRuntime "maven.modrinth:cloth-config:cz0b1j8R"
     modLocalRuntime "maven.modrinth:modmenu:ku5NivOP"
-    modLocalRuntime "maven.modrinth:hold-my-items:EpvSVHji"
+    modLocalRuntime files(rootProject.fileTree(dir: "tools/devmods", include: ["hold-my-items-5.0L4-stripped.jar"]))
 
     modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
     modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"

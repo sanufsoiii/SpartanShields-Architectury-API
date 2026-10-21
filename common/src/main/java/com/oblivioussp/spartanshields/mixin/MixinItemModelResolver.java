@@ -4,7 +4,7 @@ import com.oblivioussp.spartanshields.client.render.item.TowerShieldBEWLR;
 import com.oblivioussp.spartanshields.item.ShieldBaseItem;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -18,7 +18,7 @@ public abstract class MixinItemModelResolver {
    @Inject(method = "appendItemLayers", at = @At("TAIL"))
    private void spartanshields$setupTowerShield(
          ItemStackRenderState state, ItemStack stack, ItemDisplayContext displayContext,
-         Level level, LivingEntity entity, int seed, CallbackInfo ci) {
+         Level level, ItemOwner entity, int seed, CallbackInfo ci) {
       if (stack.getItem() instanceof ShieldBaseItem shield && shield.isTowerShield()) {
          ItemStackRenderStateAccessor stateAccessor = (ItemStackRenderStateAccessor) (Object) state;
          int layerCount = stateAccessor.spartanshields$getActiveLayerCount();

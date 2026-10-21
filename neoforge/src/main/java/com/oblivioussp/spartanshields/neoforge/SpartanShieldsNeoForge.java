@@ -46,14 +46,20 @@ public class SpartanShieldsNeoForge {
       CommonEventHandler.register();
 
       modBus.addListener(this::onSetup);
+      modBus.addListener(this::onRegisterStats);
       modBus.addListener(this::registerCapabilities);
+   }
+
+   private void onRegisterStats(net.neoforged.neoforge.registries.RegisterEvent event) {
+      event.register(net.minecraft.core.registries.Registries.CUSTOM_STAT, helper ->
+            helper.register(ModStats.SHIELD_BASH_HITS, ModStats.SHIELD_BASH_HITS));
    }
 
    private void onSetup(FMLCommonSetupEvent event) {
       Log.info("Setting up " + SpartanShields.NAME);
       event.enqueueWork(() -> {
          NetworkHandler.init();
-         ModStats.register();
+         net.minecraft.stats.Stats.CUSTOM.get(ModStats.SHIELD_BASH_HITS);
          Config.INSTANCE.applyDurabilities();
       });
    }
